@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/home_back">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/splashcolor"
+                        android:orientation="horizontal"
+
+                        android:padding="@dimen/_10sdp">
+
+                        <ImageView
+                            android:id="@+id/ivBack"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/_15sdp"
+                            android:src="@drawable/ic_white_back"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/service_pro"
+                            android:textStyle="bold"
+                            android:layout_centerInParent="true"
+                            android:textSize="@dimen/_18sdp"
+                            android:textColor="@color/white"
+                            android:backgroundTint="@color/white"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_35sdp"
+                            android:background="@drawable/green_below_round_back"/>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="@dimen/_20sdp"
+                            app:contentPadding="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_15sdp"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardElevation="@dimen/_10sdp"
+                            android:background="@color/white">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:weightSum="5"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <Button
+                                    android:id="@+id/btList"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="2"
+                                    android:layout_height="@dimen/_35sdp"
+                                    android:textAllCaps="false"
+                                    android:textStyle="bold"
+                                    android:textSize="@dimen/_10sdp"
+                                    android:textColor="@color/white"
+                                    android:background="@drawable/button_black"
+                                    android:text="@string/list"/>
+
+                                <Button
+                                    android:id="@+id/btMap"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="2"
+                                    android:layout_height="@dimen/_35sdp"
+                                    android:textAllCaps="false"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:textStyle="bold"
+                                    android:textSize="@dimen/_10sdp"
+                                    android:textColor="@color/white"
+                                    android:background="@drawable/button_outline_black"
+                                    android:text="@string/map"/>
+
+                                <ImageView
+                                    android:id="@+id/ivFilter"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:padding="@dimen/_5sdp"
+                                    android:layout_marginLeft="@dimen/_20sdp"
+                                    android:layout_height="@dimen/_30sdp"
+                                    android:src="@drawable/filter"/>
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/frameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white">
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+
+</layout>

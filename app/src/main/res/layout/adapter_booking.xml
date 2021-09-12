@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="@dimen/_10sdp"
+        app:contentPadding="@dimen/_5sdp"
+        android:layout_margin="@dimen/_5sdp"
+        app:cardBackgroundColor="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:gravity="center_vertical"
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivServiceImg"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    app:civ_border_color="@color/black"
+                    app:civ_border_width="@dimen/_1sdp"
+                    android:src="@drawable/profile_user"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvServiceName"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_20sdp"
+                            android:text="Welliam Dev"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_13sdp" />
+
+                        <TextView
+                            android:id="@+id/rquestId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Request Id  #757125"
+                            android:layout_centerInParent="true"
+                            android:textSize="@dimen/_10sdp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:backgroundTint="@color/white"/>
+
+                    </LinearLayout>
+
+                    <RatingBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:rating="5"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        style="@style/Widget.AppCompat.RatingBar.Small"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="403, Sapna Sangeeta Road, VAshali Nagar Indore MP"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textStyle="bold"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@drawable/ic_blue_location"
+                android:textSize="@dimen/_10sdp"
+                android:drawablePadding="@dimen/_5sdp"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"/>
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="08 Oct 02:30 PM"
+                android:textStyle="bold"
+                android:drawablePadding="@dimen/_5sdp"
+                android:drawableLeft="@drawable/ic_clock_blue"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <TextView
+                    android:id="@+id/tvViewDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_10sdp"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/edit_outline_gray"
+                    android:text="@string/view_details"/>
+
+                <TextView
+                    android:id="@+id/tvRequestStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/_10sdp"
+                    android:background="@drawable/status_back_grad"
+                    android:layout_alignParentRight="true"
+                    android:padding="@dimen/_10sdp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:text="Pending"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

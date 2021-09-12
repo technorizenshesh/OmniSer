@@ -1,0 +1,445 @@
+<resources>
+    <string name="app_name">Odinservs</string>
+
+    <string name="dummy_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s when an unknown printer</string>
+    <string name="login">Login</string>
+    <string name="login_now">Login Now</string>
+    <string name="add_item">Add Item</string>
+    <string name="register">Register</string>
+    <string name="places_api_key">AIzaSyCNs1wH7F3CUq1_tYEkN_9BjfAvKeJmBLw</string>
+
+    <!--Login-->
+    <string name="forgot_pass">Forgot Password?</string>
+    <string name="password">Password</string>
+    <string name="mobile">Mobile</string>
+    <string name="email">Email</string>
+    <string name="next">Next</string>
+    <string name="email_or_mobile">Email address / Mobile number</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+
+    <!--Forgot Pass-->
+    <string name="submit">Submit</string>
+
+    <!--Register-->
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
+    <string name="description">Description</string>
+    <string name="land_address">Landmark Address</string>
+    <string name="service_pricee">Service Price($)</string>
+    <string name="open_time">Open Time</string>
+    <string name="close_time">Close Time</string>
+    <string name="select_category">Select Category</string>
+    <string name="con_pass">Confirm Password</string>
+    <string name="already_have_an_account">Already have an account?</string>
+
+    <!--Verify Otp-->
+    <string name="enter_code">Enter code</string>
+    <string name="star">******</string>
+    <string name="verify">Verify</string>
+    <string name="get_a_call">Get a call</string>
+    <string name="resend">Resend</string>
+    <string name="no_car_found">No Car Avilable</string>
+    <string name="searching_driver">Searching Driver...</string>
+    <string name="driver_arrived">Driver Arrived</string>
+    <string name="your_trip_has_begin">Your trip has begin</string>
+    <string name="your_trip_is_finished">Your trip is finished</string>
+    <string name="get_a_call_now">Get a call now</string>
+    <string name="did_not_recieve_code">Did not receive the code?</string>
+    <string name="we_send_sms">We have send you an SMS on +919587667656 with 6 digit verification code.</string>
+
+    <!--Dashboard-->
+    <string name="home">Home</string>
+    <string name="my_booking">Booking</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="wallet">Wallet</string>
+    <string name="my_review">My Review</string>
+    <string name="profile">Profile</string>
+    <string name="history">History</string>
+    <string name="top_cat">Top Categories</string>
+    <string name="my_services">My Services</string>
+    <string name="view_all">View All</string>
+    <string name="taxi">Taxi</string>
+    <string name="disinfecting">Disinfecting</string>
+    <string name="car_wash">Car Wash</string>
+    <string name="on_demand">On Demand</string>
+    <string name="home_cleaning">Home Cleaning</string>
+    <string name="beauty_service">Beauty Services</string>
+    <string name="massages">Massages</string>
+    <string name="doctor">Doctor</string>
+    <string name="charges">Charges</string>
+    <string name="service_charges">Service Charges</string>
+    <string name="maids">Maids</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="apply_coupon">Apply Coupon</string>
+    <string name="apply">Apply</string>
+    <string name="service_cost">Service Cost</string>
+    <string name="service_loc">Service Location</string>
+    <string name="promo_code_discount">Promo Code Discount</string>
+    <string name="fitness_coach">Fitness Coach</string>
+    <string name="dev_services">Delivery Services</string>
+    <string name="enable_other_services">Apply for new services</string>
+    <string name="food_dev">Food Delivery</string>
+    <string name="notification">Notifications</string>
+    <string name="avalibility">Availability</string>
+    <string name="support">Support</string>
+    <string name="grocery_dev">Grocery Delivery</string>
+    <string name="parcel_dev">Parcel Delivery</string>
+    <string name="pharmacy_dev">Pharmacy Delivery</string>
+
+    <!--My Booking-->
+    <string name="your_booking">Your Booking</string>
+    <string name="booking">Booking</string>
+    <string name="list">List</string>
+    <string name="all">All</string>
+    <string name="money_in">Money In</string>
+    <string name="money_out">Money Out</string>
+    <string name="map">Map</string>
+    <string name="order">Order</string>
+
+    <!--Car Washing-->
+    <string name="car_washing">Car Washing</string>
+
+    <!--Service Provider-->
+    <string name="service_pro">Service Provider</string>
+    <string name="select_service">Select Service</string>
+    <string name="filter">Filter</string>
+    <string name="book">Book</string>
+    <string name="remove">Remove</string>
+    <string name="cart">Cart</string>
+    <string name="booking_detail">Booking Detail</string>
+    <string name="service">Service</string>
+    <string name="Gallery">Gallery</string>
+    <string name="checkout">Checkout</string>
+    <string name="review">Review</string>
+    <string name="add_special_instruction_for_service_provider">Add Special Instruction for service provider here</string>
+    <string name="maps_api_key">AIzaSyB6q7U4AE1iZT3r7dMzNs7JYfwofY7ukYQ</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Select Delivery Address-->
+    <string name="select_dev_address">Please set delivery address</string>
+    <string name="add_address">Add Address</string>
+    <string name="select_dev_add">Select Delivery Address</string>
+    <string name="buil_hous_flat">Building/House/Flat No.</string>
+    <string name="landmark">Landmark(e.g hospital,park etc)</string>
+    <string name="save">Save</string>
+    <string name="add_new_add">Add New Address</string>
+    <string name="continu">Continue</string>
+    <string name="change">Change</string>
+
+    <!--Payment-->
+    <string name="select_pay_method">Select Payment Method</string>
+    <string name="cash">Cash</string>
+    <string name="use_wallet_balance">Use wallet balance</string>
+    <string name="payment">Payment</string>
+    <string name="card_payment">Card Payment</string>
+    <string name="add">Add</string>
+    <string name="add_card">Add Card</string>
+    <string name="card_holder_name">Card holder name</string>
+    <string name="cash_payment">Cash Payment</string>
+    <string name="done">Done</string>
+    <string name="online_payment">Online Payment</string>
+
+    <!--Select Time Slots-->
+    <string name="Choose_booking_date">Choose Booking Date</string>
+    <string name="select_date">Select Date</string>
+    <string name="select_Time">Select Time</string>
+
+    <!--Food Delivery-->
+    <string name="cuisines">Cuisines</string>
+    <string name="hot_sellers">Hot Sellers</string>
+    <string name="medical_shops">Medical Shops</string>
+    <string name="search">Serach</string>
+    <string name="veg">Vegetables</string>
+    <string name="fruits">Fruits</string>
+
+    <!-- Food Filter-->
+    <string name="rating">Rating</string>
+    <string name="low_to_high">Cost (Low to High)</string>
+    <string name="high_to_low">Cost (High to Low)</string>
+    <string name="sort_by">Sort By</string>
+
+    <!--Res Details-->
+    <string name="veg_only">Veg only</string>
+    <string name="open_now">Open Now</string>
+    <string name="view_cart">View Cart</string>
+    <string name="daily_time">Daily Time</string>
+
+    <!--Res Cart-->
+    <string name="bill_details">Bill Details</string>
+    <string name="item_total">Item Total</string>
+    <string name="dev_charges">Delivery Charges</string>
+    <string name="to_pay">To pay</string>
+
+    <!--Apply Coupon-->
+    <string name="aval_coupons">Available Coupons</string>
+    <string name="or_select_coupon_from_the_kast_below">Or Select Coupon From The Kast Below</string>
+    <string name="enter_coupon_code">Enter coupon code</string>
+    <string name="select_time">Select Time</string>
+
+    <!--Order Status-->
+    <string name="order_status">Order Status</string>
+    <string name="items_details">Item Details</string>
+    <string name="order_received">Order Received</string>
+    <string name="on_the_way">On the way</string>
+    <string name="tracking">TRACKING</string>
+    <string name="processed">Processed</string>
+    <string name="order_id">Order Id : </string>
+    <string name="delivered">Delivered</string>
+    <string name="track_order">Tracking Order</string>
+    <string name="total_pay">Total Pay</string>
+    <string name="order_date">Order Date</string>
+    <string name="completed">Completed</string>
+    <string name="cancellation">Cancellation</string>
+    <string name="items_detail">Item Details</string>
+    <string name="contact_dev_boy">Contact Delivery Boy</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="product_details">Product Details</string>
+    <string name="order_details">Order Details</string>
+    <string name="pick_up_ready_for_walkin">Pick up ready for walkin</string>
+
+    <string-array name="update_status_entry">
+        <item>Update Status</item>
+        <item>PickUp</item>
+        <item>Delivered</item>
+    </string-array>
+
+    <string-array name="lang_sp">
+        <item>Select Language</item>
+        <item>English</item>
+        <item>Spanish</item>
+        <!--<item>Peru</item>-->
+    </string-array>
+
+    <string-array name="currency_sp">
+        <item>USD</item>
+        <item>EUR</item>
+        <!--<item>SOL</item>-->
+    </string-array>
+
+    <string-array name="ondemand_category">
+        <item>Select Service Category</item>
+        <item>A.C Repair</item>
+        <item>Electrician</item>
+        <item>Carpenter</item>
+        <item>Mason</item>
+        <item>Plumber</item>
+        <item>Pest Control</item>
+        <item>Painting</item>
+        <item>House Cleaning</item>
+        <item>Appliance Repair</item>
+        <item>Sofa Cleaning</item>
+        <item>Tiles &amp; Flooring</item>
+    </string-array>
+
+    <!--Change pass-->
+    <string name="services">Services</string>
+    <string name="details">Details</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="confirm_password">Confirm Password</string>
+
+    <!--Add Services-->
+    <string name="add_services">Add Services</string>
+    <string name="service_name">Service Name</string>
+    <string name="edit_services">Edit Services</string>
+    <string name="service_description">Service Description</string>
+    <string name="service_price">Service Price ($)</string>
+    <string name="service_detail">Service Details</string>
+    <string name="doc1">Doc 1</string>
+    <string name="doc2">Doc 2</string>
+    <string name="doc3">Doc 3</string>
+    <string name="edit">Edit</string>
+    <string name="manage_services">Manage Services</string>
+
+    <string name="manage_nservices">Manage\nServices</string>
+    <string name="upload_doc">Upload Service Document</string>
+    <string name="my_devlivery">My Delivery Orders</string>
+    <string name="customer_name">Customer Name :</string>
+    <string name="cust_add">Customer\nAddress :</string>
+    <string name="custo_add">Customer Address :</string>
+    <string name="res_add">Restaurant\nAddress :</string>
+    <string name="land_mark_add">Landmark\nAddress :</string>
+    <string name="payment_type">Payment Method :</string>
+    <string name="amount">Amount :</string>
+    <string name="contact_cust">Contact Customer :</string>
+    <string name="update_dev_order_status">Update Order Status :</string>
+    <string name="please_update_status">Please update status</string>
+    <string name="res_address">Restaurant address :</string>
+    <string name="pick_up">Pick Up</string>
+    <string name="update_when_pick">Update order when you picked up</string>
+    <string name="update_when_delivered">Update order when you delivered</string>
+    <string name="show_on_map">Show on map</string>
+    <string name="back">Back</string>
+    <string name="res_distance">Restaurant\nDistance : </string>
+    <string name="customer_distance">Customer\nDistance : </string>
+    <string name="customers_distance">Customer Distance : </string>
+    <string name="please_select_service_type">Please select service type</string>
+
+    <!--Taxi-->
+    <string name="pick_up_location">Pick up location</string>
+    <string name="drop_off_location">Destination address</string>
+    <string name="two_wheeler">2 Wheeler</string>
+    <string name="three_wheeler">3 Wheeler</string>
+    <string name="four_wheeler">4 Wheeler</string>
+    <string name="pay_method">Pay Method</string>
+    <string name="request_now">Request Now</string>
+    <string name="yes">Yes</string>
+    <string name="call">Call</string>
+    <string name="chat">Chat</string>
+    <string name="cancel_trip">Cancel Trip</string>
+    <string name="no">No</string>
+
+    <!--OnDemand-->
+    <string name="ac_repair">A.C. REPAIR</string>
+    <string name="elecrician">ELECTRICIAN</string>
+    <string name="carpenter">CARPENTER</string>
+    <string name="mason">MASON</string>
+    <string name="plumber">PLUMBER</string>
+    <string name="pest_control">PEST CONTROL</string>
+    <string name="painting">PAINTING</string>
+    <string name="house_cleaning">HOUSE CLEANING</string>
+    <string name="appliance">APPLIANCE REPAIR</string>
+    <string name="type_msg">Type a message</string>
+    <string name="sofa_clening">SOFA CLEANING</string>
+    <string name="tiles_and_flooring">TILES &amp; FLOORING</string>
+
+    <!--Wallet-->
+    <string name="add_money">Add Money</string>
+    <string name="send_money">Send Money</string>
+    <string name="transfer">Transfer</string>
+    <string name="transaction">Transaction</string>
+    <string name="change_password">Change Password</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="reviews">Reviews</string>
+    <string name="others">Others</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="more">More</string>
+    <string name="my_profile">My Profile</string>
+    <string name="logout">Logout</string>
+    <string name="terms_and_condition">Terms &amp; Conditions</string>
+    <string name="debited">Debited</string>
+    <string name="its_safe_and_secure">It\'s safe and secure</string>
+    <string name="choose_or_enter_amt">Choose or enter amount</string>
+    <string name="select_memeber_text">Select the member type to whom you would like to transfer to wallet balance</string>
+    <string name="credited">Credited</string>
+    <string name="user">User</string>
+    <string name="my_wallet">My Wallet</string>
+    <string name="orders">Orders</string>
+    <string name="enter_amt">Enter amount</string>
+    <string name="provider">Provider</string>
+    <string name="recent_transaction">Recent Transaction</string>
+    <string name="success">Success</string>
+    <string name="transactions">Transactions</string>
+    <string name="pay_now">Pay Now</string>
+    <string name="my_cards">My Cards</string>
+
+    <string name="reject_api_text">Are you sure you want to reject this request?</string>
+    <string name="accept_api_text">Are you sure you want to accept this request?</string>
+    <string name="request_id">"Request Id : "</string>
+    <string name="generate_invoice">Invoice</string>
+    <string name="hours_worked">Hours Worked</string>
+    <string name="rate_per_hour">Rate Per Hour</string>
+    <string name="total_hour_price">Total Hours Price</string>
+    <string name="add_item_used">Add Item Used</string>
+    <string name="item_name">Item Name</string>
+    <string name="generate_invoicees">Generate Invoice</string>
+    <string name="item_price">Item Price</string>
+    <string name="total_price">Total Price</string>
+    <string name="doller">$</string>
+    <string name="credit_debit">Credit/Debit Card</string>
+    <string name="chosse_pay_method">Choose Payment Method</string>
+    <string name="see_invoice">See Invoice</string>
+    <string name="items_used">Items Used</string>
+    <string name="no_item_used">No Item Used</string>
+    <string name="enter_card_detail">Enter Card Details</string>
+    <string name="please_chosse_payment_method">Please Choose Payment Method</string>
+    <string name="view_more">View More</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="to">to</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="update_cart">Update</string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="recent_locations">Recent Locations</string>
+    <string name="please_add_item">Please add item</string>
+    <string name="please_set_address">Please set address</string>
+    <string name="please_select_payment_method">Please select payment method</string>
+    <string name="insuffeient_amount">Insufficient Wallet Amount</string>
+    <string name="fetching_location">Fetching Location...</string>
+    <string name="my_orders">My Orders</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="order_received_text">Order Received. Awaiting Store confirmation</string>
+    <string name="order_ready">Store has confirmed the order. Delivery driver will be assigned shortly</string>
+    <string name="order_placed">Order Placed</string>
+    <string name="order_ready_tag">Accepted By Store</string>
+    <string name="order_on_the_way_text">Your order is on the way to deliver.</string>
+    <string name="order_delivered">Order Delivered</string>
+    <string name="order_delivered_text">Your Order has been Delivered</string>
+    <string name="enjoy_your_food">Enjoy your food</string>
+    <string name="select_location">Select Location</string>
+    <string name="check_details">Check Details</string>
+    <string name="check_status">Check Status</string>
+    <string name="order_amount">Order Amount :</string>
+    <string name="give_rating">Give Feedback</string>
+    <string name="comment">Comment</string>
+    <string name="username">Username</string>
+    <string name="please_give_rating">Please give rating</string>
+    <string name="please_add_comment">Please add comment</string>
+    <string name="accept_by_delivery">Accepted by Delivery Boy</string>
+    <string name="order_accept_dev_text">Delivery boy is on a way to the Store to pickup the order</string>
+    <string name="order_reject">Order Rejected</string>
+    <string name="fav_locations">Favorite Locations</string>
+    <string name="home_place">Home Place</string>
+    <string name="work_place">Work Place</string>
+    <string name="set_current_loc">Set Current Location</string>
+    <string name="set_loc_on_map">Set location on map</string>
+    <string name="please_enter_com_otp">Please enter complete otp</string>
+    <string name="not_accept_order_text">Currently Not Accepting Orders!</string>
+    <string name="ok">Ok</string>
+    <string name="update">Update</string>
+    <string name="select_option">Select Option</string>
+    <string name="option">Option</string>
+    <string name="search_items">Search items</string>
+    <string name="no_res_available">No Restaurants Available</string>
+    <string name="service_cat">Service categories</string>
+    <string name="favorite">Favorite</string>
+    <string name="short_description">Short Description</string>
+    <string name="order_history">Order History</string>
+    <string name="rate_per_hr">Rate per hr</string>
+    <string name="view_details">View Details</string>
+    <string name="payment_methodd">Payment Method</string>
+    <string name="desp">Description</string>
+    <string name="brief_desp">Brief description</string>
+    <string name="describe_request">Describe request</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="request_details">Request Details</string>
+    <string name="service_provider_available">Service Porvider Available</string>
+    <string name="book_your_nearby_provider">Book your nearby provider</string>
+    <string name="select_vech_type">Select Vehicle Type</string>
+    <string name="ride_option">Ride Option</string>
+    <string name="please_select_pick_loc">Please select pickUp location</string>
+    <string name="please_select_pickup_address">Please select pickup address</string>
+    <string name="please_select_dropoff_address">Please select dropoff address</string>
+    <string name="please_select_both_loc">Please select both locations</string>
+    <string name="estimeted_cost">Estimeted Ride Cost</string>
+    <string name="estimeted_distance">Estimeted Distance</string>
+    <string name="driver_name">Driver Name : </string>
+    <string name="no_driver_aval">No Driver Available</string>
+    <string name="you_are_already_ride">You are already in ride...</string>
+    <string name="type_a_message">Type a message</string>
+    <string name="please_write_a_message">Please write a message</string>
+    <string name="give_feedback">Give Feedback</string>
+    <string name="taxi_booking">Taxi Booking</string>
+    <string name="are_your_sure_you_want_to_cancel_the_trip">Are you sure you want to cancel the trip?</string>
+    <string name="trip_payment">Trip Payment</string>
+    <string name="estimated_trip_cost">Estimated Trip Cost</string>
+    <string name="select_payment_method">Select Payment Method</string>
+    <string name="online">Online</string>
+    <string name="please_select_pay_method">Please select payment method</string>
+    <string name="your_trip_is_cancelled">Trip is cancelled</string>
+    <string name="driver_arriving">Driver Arriving</string>
+    <string name="paid">Paid</string>
+    <string name="change_language">Change Language</string>
+
+</resources>

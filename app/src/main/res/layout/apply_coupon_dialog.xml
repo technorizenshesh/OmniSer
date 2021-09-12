@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:background="@color/home_back"
+       android:orientation="vertical">
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:background="@drawable/green_below_round_back"
+           android:padding="@dimen/_15sdp">
+
+           <ImageView
+               android:id="@+id/ivBack"
+               android:layout_width="@dimen/_25sdp"
+               android:layout_height="@dimen/_25sdp"
+               android:layout_centerVertical="true"
+               android:layout_marginRight="@dimen/_15sdp"
+               android:src="@drawable/ic_white_back"/>
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/apply_coupon"
+               android:textStyle="bold"
+               android:layout_centerInParent="true"
+               android:textSize="@dimen/_18sdp"
+               android:textColor="@color/white"
+               android:backgroundTint="@color/white"/>
+
+       </RelativeLayout>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="@dimen/_5sdp"
+           android:layout_marginRight="@dimen/_5sdp"
+           android:layout_marginTop="@dimen/_15sdp"
+           android:gravity="center"
+           android:orientation="horizontal">
+
+           <androidx.cardview.widget.CardView
+               android:layout_width="0dp"
+               android:layout_weight="0.7"
+               android:layout_margin="@dimen/_8sdp"
+               android:layout_height="wrap_content"
+               android:elevation="@dimen/_10sdp"
+               app:contentPadding="@dimen/_8sdp"
+               app:cardBackgroundColor="@color/white"
+               app:cardCornerRadius="@dimen/_5sdp">
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+
+                   <EditText
+                       android:layout_width="0dp"
+                       android:layout_weight="0.7"
+                       android:layout_height="wrap_content"
+                       android:padding="@dimen/_8sdp"
+                       android:textSize="@dimen/_12sdp"
+                       android:inputType="textVisiblePassword"
+                       android:singleLine="true"
+                       android:textColor="@color/black"
+                       android:background="@null"
+                       android:textColorHint="@color/black"
+                       android:hint="@string/enter_coupon_code"/>
+
+                   <TextView
+                       android:id="@+id/tvApply"
+                       android:layout_width="0dp"
+                       android:layout_weight="0.3"
+                       android:background="@color/black"
+                       android:layout_height="match_parent"
+                       android:text="@string/apply"
+                       android:textStyle="bold"
+                       android:textSize="@dimen/_14sdp"
+                       android:gravity="center"
+                       android:textColor="@color/white"
+                       android:padding="@dimen/_5sdp"/>
+
+               </LinearLayout>
+
+           </androidx.cardview.widget.CardView>
+
+       </LinearLayout>
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/or_select_coupon_from_the_kast_below"
+           android:layout_marginTop="@dimen/_15sdp"
+           android:layout_centerInParent="true"
+           android:layout_gravity="center"
+           android:textSize="@dimen/_13sdp"
+           android:backgroundTint="@color/white"/>
+
+       <androidx.cardview.widget.CardView
+           android:layout_width="match_parent"
+           android:layout_margin="@dimen/_15sdp"
+           android:layout_height="wrap_content"
+           android:elevation="@dimen/_10sdp"
+           app:cardBackgroundColor="@color/white"
+           app:cardCornerRadius="@dimen/_5sdp">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal">
+
+               <TextView
+                   android:layout_width="0dp"
+                   android:layout_weight="0.3"
+                   android:background="@drawable/black_cut_back"
+                   android:layout_height="wrap_content"
+                   android:text="USE CODE \n DHTN54"
+                   android:textStyle="bold"
+                   android:textSize="@dimen/_12sdp"
+                   android:gravity="center"
+                   android:textColor="@color/white"
+                   android:padding="@dimen/_10sdp"/>
+
+               <TextView
+                   android:layout_width="0dp"
+                   android:layout_weight="0.4"
+                   android:layout_height="match_parent"
+                   android:text="Use and save"
+                   android:textStyle="bold"
+                   android:textSize="@dimen/_12sdp"
+                   android:gravity="center"
+                   android:textColor="@color/black"
+                   android:padding="@dimen/_10sdp"/>
+
+               <TextView
+                   android:layout_width="0dp"
+                   android:layout_weight="0.2"
+                   android:layout_height="match_parent"
+                   android:text="5.0%"
+                   android:textStyle="bold"
+                   android:textSize="@dimen/_12sdp"
+                   android:gravity="center"
+                   android:textColor="@color/splashcolor"/>
+
+               <ImageView
+                   android:layout_width="0dp"
+                   android:layout_weight="0.1"
+                   android:layout_marginRight="@dimen/_3sdp"
+                   android:layout_height="match_parent"
+                   android:src="@drawable/ic_down_arrow_green"/>
+
+           </LinearLayout>
+
+       </androidx.cardview.widget.CardView>
+
+   </LinearLayout>
+
+</layout>

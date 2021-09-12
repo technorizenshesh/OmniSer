@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.technorizen.omniser">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:name=".utils.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activities.SearchItemsAct"></activity>
+        <activity android:name=".activities.PaypalWebviewAct" />
+        <activity android:name=".taxi.activities.TrackTaxiAct" />
+        <activity android:name=".taxi.activities.RideOptActivity" />
+        <activity
+            android:name=".pharmacydelivery.activities.MyPharmacyOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pharmacydelivery.activities.PharmacyShopListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fooddelivery.activities.MyOrdersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fooddelivery.activities.PinLocationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.ActionBar" />
+        <activity
+            android:name=".ondemand.activities.ViewRequestDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ReviewsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ondemand.activities.MakeOnDemandRequestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.UpdateProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ChnagePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MyProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pharmacydelivery.activities.PharmacyPayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pharmacydelivery.activities.PharmacyShopDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pharmacydelivery.activities.PharmacyTrackingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pharmacydelivery.activities.PharmacyCartActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pharmacydelivery.activities.SetPharmacyDeliveryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pharmacydelivery.activities.PharmacyOrderStatusActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pharmacydelivery.activities.PharmacyOrderHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pharmacydelivery.activities.PharmacyItemDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pharmacydelivery.activities.PharmacyHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.TransactionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".taxi.activities.TaxiChatingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ondemand.activities.OnDemandActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".taxi.activities.TaxiTrackingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".taxi.activities.TaxiBookingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".taxi.activities.TaxiHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".parceldelivery.ParcelDeliveryHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".grocerydelivery.activities.GroceryPayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".grocerydelivery.activities.SetGroceryFoodDeliveryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".grocerydelivery.activities.GraceryOrderStatusActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".grocerydelivery.activities.GraceryOrderHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".grocerydelivery.activities.MyGroceryCartActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".grocerydelivery.activities.GraceryShopDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".grocerydelivery.activities.GraceryShopListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".grocerydelivery.activities.GraceryItemDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CommonBookingDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fooddelivery.activities.TrackFoodOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fooddelivery.activities.FoodOrderHistoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fooddelivery.activities.FoodOrderStatusActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fooddelivery.activities.FoodPayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fooddelivery.activities.FoodTimeSlotsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fooddelivery.activities.SetFoodDeliveryLocationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fooddelivery.activities.FoodItemDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fooddelivery.activities.MyFoodCartActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fooddelivery.activities.RestaurantDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fooddelivery.activities.RestaurentListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fooddelivery.activities.FoodHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CommonTimeSlotsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CommonPaymentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.SetDeliveryLocationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CommonCartActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CommonProviderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CommonServiceProActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".homecleaning.activities.HomeCleaningCatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ondemand.activities.CarWashinCatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.WalletActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".grocerydelivery.activities.GroceryHomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MyBookingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.DashboardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.VerifyOtpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ForgotPassActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.WelcomeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/maps_api_key" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/picker_provider_paths" />
+        </provider>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <service android:name=".fcm.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/logo_green" /> <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming notification message. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+    </application>
+
+</manifest>

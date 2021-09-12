@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/home_back">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/green_below_round_back"
+                    android:padding="@dimen/_12sdp">
+
+                    <ImageView
+                        android:id="@+id/ivBack"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/_15sdp"
+                        android:src="@drawable/ic_white_back"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/booking_detail"
+                        android:textStyle="bold"
+                        android:layout_centerInParent="true"
+                        android:textSize="@dimen/_18sdp"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/white"/>
+
+                </RelativeLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="@dimen/_10sdp"
+                    app:contentPadding="@dimen/_10sdp"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    android:layout_margin="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_alignParentRight="true"
+                        android:orientation="horizontal">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="@dimen/_40sdp"
+                            android:layout_height="@dimen/_40sdp"
+                            app:civ_border_color="@color/black"
+                            android:layout_gravity="start"
+                            app:civ_border_width="@dimen/_1sdp"
+                            android:src="@drawable/profile_user"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_20sdp"
+                                    android:text="Welliam Dev"
+                                    android:layout_marginLeft="@dimen/_5sdp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_13sdp" />
+
+                            </LinearLayout>
+
+                            <RatingBar
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:rating="5"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:layout_marginLeft="@dimen/_5sdp"
+                                style="@style/Widget.AppCompat.RatingBar.Small"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_20sdp"
+                    android:text="@string/service"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    android:elevation="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/white"
+                    app:contentPadding="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_15sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_alignParentRight="true"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="0.9"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/_5sdp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_20sdp"
+                                android:text="Installation"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_12sdp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_20sdp"
+                                android:text="$15.00"
+                                android:textStyle="bold"
+                                android:textColor="@color/splashcolor"
+                                android:textSize="@dimen/_10sdp" />
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_weight="0.1"
+                            android:gravity="end"
+                            android:src="@drawable/delete_red" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvApply"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    android:elevation="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/white"
+                    app:contentPadding="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_15sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.2"
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@drawable/coupon_icon"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.7"
+                            android:layout_height="wrap_content"
+                            android:text="@string/apply_coupon"
+                            android:textStyle="bold"
+                            android:textAllCaps="true"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_centerInParent="true"
+                            android:textSize="@dimen/_13sdp"
+                            android:textColor="@color/black"
+                            android:backgroundTint="@color/white"/>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_weight="0.1"
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@drawable/ic_right_black_arrow"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_20sdp"
+                    android:text="@string/charges"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_15sdp" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    android:elevation="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/white"
+                    app:contentPadding="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_15sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/_3sdp">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/service_cost"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                android:layout_weight=".5"
+                                android:padding="@dimen/_3sdp">
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/itemsTotal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="$20.00"
+                                android:textSize="15sp"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:gravity="end"
+                                android:layout_weight=".5"
+                                android:padding="@dimen/_3sdp">
+
+                            </TextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_3sdp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/subtotal"
+                                android:textSize="@dimen/_15sdp"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"
+                                android:layout_weight=".5"
+                                android:padding="@dimen/_3sdp">
+
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/deliveryfee"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="$35.00"
+                                android:textSize="15sp"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:gravity="end"
+                                android:layout_weight=".5"
+                                android:padding="@dimen/_3sdp">
+
+                            </TextView>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    android:elevation="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/white"
+                    app:contentPadding="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_15sdp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/service_loc"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_weight=".5"
+                            android:padding="@dimen/_3sdp">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Indore MP India"
+                            android:drawablePadding="@dimen/_5sdp"
+                            android:textSize="@dimen/_12sdp"
+                            android:elevation="10dp"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:textColor="@color/black"
+                            android:inputType="textVisiblePassword"
+                            android:drawableLeft="@drawable/ic_loc_green"
+                            android:backgroundTint="@color/white"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginRight="@dimen/_50sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:background="@color/black"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <RelativeLayout
+                    android:id="@+id/rlBook"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_30sdp"
+                    android:layout_marginRight="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:background="@drawable/button_green">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_centerVertical="true"
+                        android:textSize="@dimen/_13sdp"
+                        android:text="@string/book"/>
+
+                    <ImageView
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/arror_white"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+
+</layout>
