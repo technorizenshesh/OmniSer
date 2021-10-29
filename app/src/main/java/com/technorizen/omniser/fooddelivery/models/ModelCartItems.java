@@ -119,6 +119,16 @@ public class ModelCartItems implements Serializable {
 
         private ArrayList<Topping> topingss;
 
+        private ArrayList<ExtraOptions> extra_options;
+
+        public ArrayList<ExtraOptions> getExtra_options() {
+            return extra_options;
+        }
+
+        public void setExtra_options(ArrayList<ExtraOptions> extra_options) {
+            this.extra_options = extra_options;
+        }
+
         public ArrayList<Topping> getTopingss() {
             return topingss;
         }
@@ -256,6 +266,75 @@ public class ModelCartItems implements Serializable {
             }
         }
 
+        public class ExtraOptions
+        {
+            private String id;
+
+            private String item_id;
+
+            private String store_id;
+
+            private String option_name;
+
+            private String option_price;
+
+            private String date_time;
+
+            private String status;
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public String getOption_name() {
+                return option_name;
+            }
+
+            public void setOption_name(String option_name) {
+                this.option_name = option_name;
+            }
+
+            public String getOption_price() {
+                return option_price;
+            }
+
+            public void setOption_price(String option_price) {
+                this.option_price = option_price;
+            }
+
+            public String getDate_time() {
+                return date_time;
+            }
+
+            public void setDate_time(String date_time) {
+                this.date_time = date_time;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+            public String getId(){
+                return this.id;
+            }
+            public void setItem_id(String item_id){
+                this.item_id = item_id;
+            }
+            public String getItem_id(){
+                return this.item_id;
+            }
+            public void setStore_id(String store_id){
+                this.store_id = store_id;
+            }
+            public String getStore_id(){
+                return this.store_id;
+            }
+
+        }
+
         public class Item_details
         {
             private String id;
@@ -270,9 +349,29 @@ public class ModelCartItems implements Serializable {
 
             private String description;
 
+            private String short_description_es;
+
+            private String item_name_es;
+
             private String image;
 
             private String date_time;
+
+            public String getShort_description_es() {
+                return short_description_es;
+            }
+
+            public void setShort_description_es(String short_description_es) {
+                this.short_description_es = short_description_es;
+            }
+
+            public String getItem_name_es() {
+                return item_name_es;
+            }
+
+            public void setItem_name_es(String item_name_es) {
+                this.item_name_es = item_name_es;
+            }
 
             public void setId(String id){
                 this.id = id;

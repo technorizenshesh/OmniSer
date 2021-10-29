@@ -7,12 +7,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -58,9 +60,7 @@ public class WalletActivity extends AppCompatActivity {
         sharedPref = SharedPref.getInstance(mContext);
         modelLogin = sharedPref.getUserDetails(AppConstant.USER_DETAILS);
         ProjectUtil.changeStatusBarColor(WalletActivity.this);
-
         init();
-
     }
 
     private void init() {
@@ -75,7 +75,6 @@ public class WalletActivity extends AppCompatActivity {
                 getAllTransactions();
             }
         });
-
 
         binding.ivBack.setOnClickListener(v -> {
             finish();
@@ -307,6 +306,15 @@ public class WalletActivity extends AppCompatActivity {
         TextView tv899 = dialog.findViewById(R.id.tv899);
         Button btDone = dialog.findViewById(R.id.btDone);
 
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP)
+                    dialog.dismiss();
+                return false;
+            }
+        });
+
         ivMinus.setOnClickListener(v -> {
             if(!(etMoney.getText().toString().trim().equals("") || etMoney.getText().toString().trim().equals("0"))) {
                 walletTmpAmt = Double.parseDouble(etMoney.getText().toString().trim()) - 1;
@@ -351,7 +359,12 @@ public class WalletActivity extends AppCompatActivity {
             } else {
                 // dialog.dismiss();
                 Log.e("walletAmount","amount = " + walletTmpAmt);
-                addWalletAmountApiCall(dialog, etMoney.getText().toString().trim());
+                startActivity(new Intent(mContext, PaypalWebviewAct.class)
+                        .putExtra("type",AppConstant.WALLET)
+                        .putExtra("amount",walletTmpAmt+"")
+                        .putExtra("id",modelLogin.getResult().getId())
+                );
+                finish();
             }
         });
 

@@ -284,6 +284,14 @@
                 android:includeFontPadding="false"
                 android:text="@string/cash"/>
 
+            <RadioButton
+                android:id="@+id/rbWallet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/darkGreen2"
+                android:includeFontPadding="false"
+                android:text="@string/wallet"/>
+
         </RadioGroup>
 
         <androidx.appcompat.widget.AppCompatButton

@@ -72,7 +72,7 @@ public class AdapterBookings extends RecyclerView.Adapter<AdapterBookings.Bookin
     @NonNull
     @Override
     public BookingAdapaterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_booking,parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_booking, parent, false);
         return new BookingAdapaterViewHolder(view);
     }
 
@@ -81,44 +81,62 @@ public class AdapterBookings extends RecyclerView.Adapter<AdapterBookings.Bookin
 
         ModelBooking.Result data = bookinglist.get(position);
 
-        Picasso.get().load(data.getService_details().getImage()).into(holder.ivServiceImg);
+        Picasso.get().load(data.getService_details().getImage())
+                .into(holder.ivServiceImg);
         holder.rquestId.setText("Request Id : " + data.getOrder_id());
         holder.tvAddress.setText(data.getDelivery_address());
         holder.tvTime.setText(data.getService_time());
         holder.tvServiceName.setText(data.getService_details().getSub_cat_name());
 
-        if("pending".equals(data.getStatus())) {
-            holder.tvRequestStatus.setText("Pending");
-        } else if("hire".equals(data.getStatus())) {
-            holder.tvRequestStatus.setText("Hired!");
-        } else if("start".equals(data.getStatus())) {
-            holder.tvRequestStatus.setText("Started");
-        } else if("complete".equals(data.getStatus())) {
-            holder.tvRequestStatus.setText("Completed");
-        } else if("unpaid".equals(data.getStatus())) {
-            holder.tvViewDetails.setText(mContext.getString(R.string.see_invoice));
-            holder.tvRequestStatus.setText("Unpaid");
-        } else if("paid".equals(data.getStatus())) {
-            holder.tvRequestStatus.setText("Paid");
+        if ("es".equals(sharedPref.getLanguage("lan"))) {
+            if ("pending".equals(data.getStatus())) {
+                holder.tvRequestStatus.setText("Pendiente");
+            } else if ("hire".equals(data.getStatus())) {
+                holder.tvRequestStatus.setText("Contratar!");
+            } else if ("start".equals(data.getStatus())) {
+                holder.tvRequestStatus.setText("Comienzo");
+            } else if ("complete".equals(data.getStatus())) {
+                holder.tvRequestStatus.setText("Completo");
+            } else if ("unpaid".equals(data.getStatus())) {
+                holder.tvViewDetails.setText(mContext.getString(R.string.see_invoice));
+                holder.tvRequestStatus.setText("No pagado");
+            } else if ("paid".equals(data.getStatus())) {
+                holder.tvRequestStatus.setText("Pagado");
+            }
+        } else {
+            if ("pending".equals(data.getStatus())) {
+                holder.tvRequestStatus.setText("Pending");
+            } else if ("hire".equals(data.getStatus())) {
+                holder.tvRequestStatus.setText("Hired!");
+            } else if ("start".equals(data.getStatus())) {
+                holder.tvRequestStatus.setText("Started");
+            } else if ("complete".equals(data.getStatus())) {
+                holder.tvRequestStatus.setText("Completed");
+            } else if ("unpaid".equals(data.getStatus())) {
+                holder.tvViewDetails.setText(mContext.getString(R.string.see_invoice));
+                holder.tvRequestStatus.setText("Unpaid");
+            } else if ("paid".equals(data.getStatus())) {
+                holder.tvRequestStatus.setText("Paid");
+            }
         }
 
         holder.tvViewDetails.setOnClickListener(v -> {
-            if("pending".equals(data.getStatus())) {
+            if ("pending".equals(data.getStatus())) {
                 mContext.startActivity(new Intent(mContext, ViewRequestDetailsActivity.class)
-                        .putExtra("data",new Gson().toJson(data))
+                        .putExtra("data", new Gson().toJson(data))
                 );
-            } else if("unpaid".equals(data.getStatus())) {
-                getInvoiceDetails(data.getAccepted_provider_id(),data.getId(),position);
+            } else if ("unpaid".equals(data.getStatus())) {
+                getInvoiceDetails(data.getAccepted_provider_id(), data.getId(), position);
             }
         });
 
     }
 
-    private void getInvoiceDetails(String providerId,String requestId,int position) {
-        ProjectUtil.showProgressDialog(mContext,false,"Please wait...");
+    private void getInvoiceDetails(String providerId, String requestId, int position) {
+        ProjectUtil.showProgressDialog(mContext, false, "Please wait...");
         Call<ResponseBody> call = ApiFactory.loadInterface().getInvoiceDetails(
                 providerId
-                ,requestId);
+                , requestId);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -129,14 +147,14 @@ public class AdapterBookings extends RecyclerView.Adapter<AdapterBookings.Bookin
                     String responseString = response.body().string();
                     JSONObject jsonObject = new JSONObject(responseString);
 
-                    Log.e("gdfsfsfss","response = " + response);
+                    Log.e("gdfsfsfss", "response = " + response);
 
-                    if(jsonObject.getString("status").equals("1")) {
+                    if (jsonObject.getString("status").equals("1")) {
 
-                        ModelInvoiceDetail modelInvoiceDetail = new Gson().fromJson(responseString,ModelInvoiceDetail.class);
+                        ModelInvoiceDetail modelInvoiceDetail = new Gson().fromJson(responseString, ModelInvoiceDetail.class);
                         // bookinglist.remove(position);
                         // notifyDataSetChanged();
-                        showInvoiceDialog(modelInvoiceDetail,requestId);
+                        showInvoiceDialog(modelInvoiceDetail, requestId);
 
                         Toast.makeText(mContext, mContext.getString(R.string.success), Toast.LENGTH_SHORT).show();
                     } else {
@@ -145,7 +163,7 @@ public class AdapterBookings extends RecyclerView.Adapter<AdapterBookings.Bookin
 
                 } catch (Exception e) {
                     // Toast.makeText(mContext, "Exception = " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("Exception","Exception = " + e.getMessage());
+                    Log.e("Exception", "Exception = " + e.getMessage());
                 }
 
             }
@@ -154,7 +172,7 @@ public class AdapterBookings extends RecyclerView.Adapter<AdapterBookings.Bookin
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 ProjectUtil.pauseProgressDialog();
                 Toast.makeText(mContext, t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("onFailure","onFailure = " + t.getMessage());
+                Log.e("onFailure", "onFailure = " + t.getMessage());
             }
 
         });
@@ -178,17 +196,17 @@ public class AdapterBookings extends RecyclerView.Adapter<AdapterBookings.Bookin
         RecyclerView recyclerView = dialog.findViewById(R.id.rvItemUsed);
         RadioButton cbCardPayment = dialog.findViewById(R.id.cbCardPayment);
         RadioButton cbWallet = dialog.findViewById(R.id.cbWallet);
-       // RadioButton cbCash = dialog.findViewById(R.id.cbCash);
+//      RadioButton cbCash = dialog.findViewById(R.id.cbCash);
 
-//        Log.e("kjasgdfkjaskf","model_items = " +
-//                new Gson().toJson(modelInvoiceDetail.getResult().getItem_arrays()));
+//      Log.e("kjasgdfkjaskf","model_items = " +
+//             new Gson().toJson(modelInvoiceDetail.getResult().getItem_arrays()));
 
-        if(modelInvoiceDetail.getResult().getItem_arrays() == null ||
+        if (modelInvoiceDetail.getResult().getItem_arrays() == null ||
                 modelInvoiceDetail.getResult().getItem_arrays().size() == 0) {
             itemsUsed.setText(mContext.getString(R.string.no_item_used));
         }
 
-        AdapterAddItems adapterAddItems = new AdapterAddItems(mContext,modelInvoiceDetail.getResult().getItem_arrays());
+        AdapterAddItems adapterAddItems = new AdapterAddItems(mContext, modelInvoiceDetail.getResult().getItem_arrays());
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(adapterAddItems);
 
@@ -196,7 +214,7 @@ public class AdapterBookings extends RecyclerView.Adapter<AdapterBookings.Bookin
         tvRequestDesp.setText(modelInvoiceDetail.getResult().getDescription());
         tvHoursWorked.setText(modelInvoiceDetail.getResult().getWorked_time());
 
-        if(modelInvoiceDetail.getResult().getItem_total_price() == null ||
+        if (modelInvoiceDetail.getResult().getItem_total_price() == null ||
                 modelInvoiceDetail.getResult().getItem_total_price().equals("")) {
             tvItemTotalPrice.setText(mContext.getString(R.string.doller) + "0");
         } else {
@@ -208,23 +226,26 @@ public class AdapterBookings extends RecyclerView.Adapter<AdapterBookings.Bookin
         tvTotalPrice.setText(mContext.getString(R.string.doller) + modelInvoiceDetail.getResult().getTotal_price());
 
         btPayNow.setOnClickListener(v -> {
+
             mContext.startActivity(new Intent(mContext, PaypalWebviewAct.class)
-                    .putExtra("type",AppConstant.ON_DEMAND)
-                    .putExtra("amount",modelInvoiceDetail.getResult().getTotal_price())
-                    .putExtra("id",modelLogin.getResult().getId())
-                    .putExtra("data",modelInvoiceDetail)
+                    .putExtra("type", AppConstant.ON_DEMAND)
+                    .putExtra("amount", modelInvoiceDetail.getResult().getTotal_price())
+                    .putExtra("id", modelLogin.getResult().getId())
+                    .putExtra("data", modelInvoiceDetail)
             );
-              bookOnDemandServiceApi(modelInvoiceDetail,requestId,"online");
-//            if(cbCardPayment.isChecked()) {
-//                // openPaymentDialog(modelInvoiceDetail,requestId);
-//            } else if(cbWallet.isChecked()) {
-//                bookOnDemandServiceApi(modelInvoiceDetail,requestId,"wallet");
-//            } /*else if(cbCash.isChecked()) {
-//                bookOnDemandServiceApi(modelInvoiceDetail,requestId,"cash");
-//            }*/ else {
-//                Toast.makeText(mContext, mContext.getString(R.string.please_chosse_payment_method), Toast.LENGTH_SHORT).show();
-//            }
-            // generateInvoiceApi(modelInvoiceDetail,requestId,dialog);
+
+//          bookOnDemandServiceApi(modelInvoiceDetail,requestId,"online");
+//          if(cbCardPayment.isChecked()) {
+//              // openPaymentDialog(modelInvoiceDetail,requestId);
+//          } else if(cbWallet.isChecked()) {
+//              bookOnDemandServiceApi(modelInvoiceDetail,requestId,"wallet");
+//          } /*else if(cbCash.isChecked()) {
+//              bookOnDemandServiceApi(modelInvoiceDetail,requestId,"cash");
+//          }*/ else {
+//              Toast.makeText(mContext, mContext.getString(R.string.please_chosse_payment_method), Toast.LENGTH_SHORT).show();
+//          }
+//            generateInvoiceApi(modelInvoiceDetail,requestId,dialog);
+
         });
 
         dialog.show();
@@ -245,19 +266,19 @@ public class AdapterBookings extends RecyclerView.Adapter<AdapterBookings.Bookin
                 .postalCodeRequired(false)
                 .mobileNumberRequired(false)
                 .mobileNumberExplanation("SMS is required on this number")
-                .setup(((AppCompatActivity)mContext));
+                .setup(((AppCompatActivity) mContext));
 
         card_form.getCvvEditText().setInputType(InputType.TYPE_CLASS_NUMBER |
                 InputType.TYPE_NUMBER_VARIATION_PASSWORD);
 
         btPayNow.setOnClickListener(v -> {
-            if(card_form.isValid()) {
+            if (card_form.isValid()) {
                 Card.Builder card = new Card.Builder(card_form.getCardNumber(),
                         Integer.valueOf(card_form.getExpirationMonth()),
                         Integer.valueOf(card_form.getExpirationYear()),
                         card_form.getCvv());
 
-            //                  Stripe stripe = new Stripe(mContext, "pk_test_bSLVSktslgDu3X7dnk45qd7T003tWG0Rqz");
+                //                  Stripe stripe = new Stripe(mContext, "pk_test_bSLVSktslgDu3X7dnk45qd7T003tWG0Rqz");
 //                      stripe.createCardToken(
 //                        card.build(), new ApiResultCallback<Token>() {
 //                            @Override
@@ -280,7 +301,8 @@ public class AdapterBookings extends RecyclerView.Adapter<AdapterBookings.Bookin
 
 //                        });
 
-            } else {}
+            } else {
+            }
 
         });
 
@@ -288,8 +310,8 @@ public class AdapterBookings extends RecyclerView.Adapter<AdapterBookings.Bookin
 
     }
 
-    private void bookOnDemandServiceApi(ModelInvoiceDetail modelInvoiceDetail,String requestId,String paymentStatus) {
-        ProjectUtil.showProgressDialog(mContext,false,"Please wait...");
+    private void bookOnDemandServiceApi(ModelInvoiceDetail modelInvoiceDetail, String requestId, String paymentStatus) {
+        ProjectUtil.showProgressDialog(mContext, false, "Please wait...");
         Call<ResponseBody> call = null;
 
         call = ApiFactory.loadInterface().bookOnDemandServiceApi(
@@ -308,9 +330,9 @@ public class AdapterBookings extends RecyclerView.Adapter<AdapterBookings.Bookin
                     String responseString = response.body().string();
                     JSONObject jsonObject = new JSONObject(responseString);
 
-                    Log.e("hjdhjkhfjksd","responseString = " + response);
+                    Log.e("hjdhjkhfjksd", "responseString = " + response);
 
-                    if(jsonObject.getString("status").equals("1")) {
+                    if (jsonObject.getString("status").equals("1")) {
 
                         /* finish();
                            startActivity(new Intent(mContext, MyBookingActivity.class)); */
@@ -324,7 +346,7 @@ public class AdapterBookings extends RecyclerView.Adapter<AdapterBookings.Bookin
 
                 } catch (Exception e) {
                     Toast.makeText(mContext, "Exception = " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("Exception","Exception = " + e.getMessage());
+                    Log.e("Exception", "Exception = " + e.getMessage());
                 }
 
             }
@@ -333,7 +355,7 @@ public class AdapterBookings extends RecyclerView.Adapter<AdapterBookings.Bookin
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 ProjectUtil.pauseProgressDialog();
                 Toast.makeText(mContext, t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("onFailure","onFailure = " + t.getMessage());
+                Log.e("onFailure", "onFailure = " + t.getMessage());
             }
         });
     }
@@ -346,7 +368,7 @@ public class AdapterBookings extends RecyclerView.Adapter<AdapterBookings.Bookin
     public class BookingAdapaterViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView ivServiceImg;
-        TextView rquestId,tvAddress,tvTime,tvServiceName,tvViewDetails,tvRequestStatus;
+        TextView rquestId, tvAddress, tvTime, tvServiceName, tvViewDetails, tvRequestStatus;
 
         public BookingAdapaterViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -396,6 +396,7 @@
     <string name="ok">OK</string>
     <string name="update">Actualizar</string>
     <string name="select_option">Seleccionar opción</string>
+    <string name="select_topping">Seleccionar cobertura</string>
     <string name="option">Opción</string>
     <string name="search_items">Elementos de búsqueda</string>
     <string name="no_res_available">No hay restaurantes disponibles</string>

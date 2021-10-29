@@ -2,8 +2,10 @@ package com.technorizen.omniser.grocerydelivery.adapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +77,12 @@ public class AdapterGroceryCartItems extends RecyclerView.Adapter<AdapterGrocery
 
         MyGroceryCartActivity.storeId = data.getRes_id();
 
-        holder.tvName.setText(data.getItem_details().getItem_name());
+        if ("es".equals(sharedPref.getLanguage("lan"))) {
+            holder.tvName.setText(data.getItem_details().getItem_name_es());
+        } else {
+            holder.tvName.setText(data.getItem_details().getItem_name());
+        }
+
         holder.tvPrice.setText(AppConstant.DOLLER_SIGN + data.getItem_details().getItem_price() +
                 " x " + data.getQuantity());
         holder.tvQuantity.setText(data.getQuantity());
@@ -144,6 +151,15 @@ public class AdapterGroceryCartItems extends RecyclerView.Adapter<AdapterGrocery
         dialog.setContentView(R.layout.food_item_detail_dialog);
         dialog.setCancelable(false);
 
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP)
+                    dialog.dismiss();
+                return false;
+            }
+        });
+
         ImageView ivItemImage = dialog.findViewById(R.id.ivItemImage);
         ImageView ivMinus = dialog.findViewById(R.id.ivMinus);
         ImageView ivPlus = dialog.findViewById(R.id.ivPlus);
@@ -166,7 +182,13 @@ public class AdapterGroceryCartItems extends RecyclerView.Adapter<AdapterGrocery
                 .into(ivItemImage);
 
         tvQuantity.setText(data.getQuantity());
-        tvItemName.setText(data.getItem_details().getItem_name());
+
+        if ("es".equals(sharedPref.getLanguage("lan"))) {
+            tvItemName.setText(data.getItem_details().getItem_name_es());
+        } else {
+            tvItemName.setText(data.getItem_details().getItem_name());
+        }
+
         tvPrice.setText(AppConstant.DOLLER_SIGN + " " + data.getPrice());
         tvItemDesp.setText(data.getItem_details().getDescription());
 
@@ -248,7 +270,7 @@ public class AdapterGroceryCartItems extends RecyclerView.Adapter<AdapterGrocery
                 modelLogin.getResult().getId(),
                 quantity,
                 data.getRes_id(),
-                price,AppConstant.GROCERY,topping);
+                price,AppConstant.GROCERY,topping,"");
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

@@ -46,7 +46,7 @@ import retrofit2.Response;
 public class RestaurantDetailsActivity extends AppCompatActivity
         implements UpdateFoodItemsModel {
 
-    public static HashMap<String,ModelResTypeItems.Result.Item_data> cartHash = new HashMap<>();
+    public static HashMap<String, ModelResTypeItems.Result.Item_data> cartHash = new HashMap<>();
     Context mContext = RestaurantDetailsActivity.this;
     ActivityRestaurantDetailsBinding binding;
     String resId = "";
@@ -56,7 +56,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity
     boolean checkAllZeroOrNot = false;
     ModelLogin modelLogin;
     AdapterResCat adapterResCatt;
-    ModelResTypeItems modelResTypeItems,modelResTypeItemsTemp;
+    ModelResTypeItems modelResTypeItems, modelResTypeItemsTemp;
     boolean isSearchVisible, isResLike;
 
     @Override
@@ -93,8 +93,10 @@ public class RestaurantDetailsActivity extends AppCompatActivity
         binding.ivSearch.setOnClickListener(v -> {
             startActivity(new Intent(mContext, SearchItemsAct.class)
                     .putExtra("resid", resId)
+                    .putExtra("type", AppConstant.FOOD)
             );
-//            binding.etSearch.setText("");
+
+            //            binding.etSearch.setText("");
 //            if(isSearchVisible) {
 //                isSearchVisible = false;
 //                binding.cvSearchView.setVisibility(View.GONE);
@@ -104,12 +106,12 @@ public class RestaurantDetailsActivity extends AppCompatActivity
 //                binding.cvSearchView.setVisibility(View.VISIBLE);
 //                binding.rvResCategory.setVisibility(View.GONE);
 //            }
+
         });
 
         binding.etSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence query, int start, int before, int count) {
@@ -146,7 +148,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity
                     binding.rvResItems.setAdapter(adapterResCatt);
 
                 } catch (Exception e) {
-                    AdapterResCat adapterResCatt = new AdapterResCat(mContext, modelResTypeItems.getResult());
+                    AdapterResCat adapterResCatt = new AdapterResCat(mContext, null);
                     binding.rvResItems.setLayoutManager(new LinearLayoutManager(mContext));
                     binding.rvResItems.setAdapter(adapterResCatt);
                 }
@@ -154,7 +156,6 @@ public class RestaurantDetailsActivity extends AppCompatActivity
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
 
         });
@@ -178,7 +179,7 @@ public class RestaurantDetailsActivity extends AppCompatActivity
 
     private void setLikeApi(String status) {
 
-        ProjectUtil.showProgressDialog(mContext, true, getString(R.string.please_wait));
+        ProjectUtil.showProgressDialog(mContext,true, getString(R.string.please_wait));
         Call<ResponseBody> call = null;
 
         call = ApiFactory.loadInterface().setLike(resId, status, modelLogin.getResult().getId());

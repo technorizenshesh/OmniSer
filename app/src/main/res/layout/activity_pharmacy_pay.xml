@@ -62,7 +62,6 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cvCash"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"

@@ -23,12 +23,12 @@
             android:id="@+id/cvLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="@dimen/_10sdp"
-            android:clickable="true"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/ivBack"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginRight="@dimen/_10sdp"
+            android:layout_toRightOf="@+id/ivBack"
+            android:clickable="true"
+            android:elevation="@dimen/_10sdp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_5sdp">
 
@@ -42,20 +42,20 @@
                 <EditText
                     android:id="@+id/etSerach"
                     android:layout_width="0dp"
-                    android:layout_weight="0.9"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/_2sdp"
-                    android:textSize="@dimen/_10sdp"
-                    android:inputType="textVisiblePassword"
-                    android:singleLine="true"
+                    android:layout_weight="0.9"
+                    android:background="@null"
                     android:clickable="false"
                     android:cursorVisible="false"
+                    android:drawableLeft="@drawable/ic_search_gray"
+                    android:drawablePadding="@dimen/_5sdp"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:background="@null"
-                    android:drawablePadding="@dimen/_5sdp"
-                    android:drawableLeft="@drawable/ic_search_gray"
-                    android:hint="@string/search"/>
+                    android:hint="@string/search"
+                    android:inputType="textVisiblePassword"
+                    android:padding="@dimen/_2sdp"
+                    android:singleLine="true"
+                    android:textSize="@dimen/_10sdp" />
 
             </LinearLayout>
 

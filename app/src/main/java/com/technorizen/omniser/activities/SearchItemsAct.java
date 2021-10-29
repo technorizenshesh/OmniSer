@@ -21,8 +21,11 @@ import com.technorizen.omniser.fooddelivery.adapters.AdapterResCategoryList;
 import com.technorizen.omniser.fooddelivery.adapters.AdapterResItems;
 import com.technorizen.omniser.fooddelivery.adapters.AdapterResItemsSearch;
 import com.technorizen.omniser.fooddelivery.models.ModelResTypeItems;
+import com.technorizen.omniser.models.ModelLogin;
 import com.technorizen.omniser.utils.ApiFactory;
+import com.technorizen.omniser.utils.AppConstant;
 import com.technorizen.omniser.utils.ProjectUtil;
+import com.technorizen.omniser.utils.SharedPref;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -40,12 +43,18 @@ public class SearchItemsAct extends AppCompatActivity {
     ActivitySearchItemsBinding binding;
     AdapterResItemsSearch adapterResItems;
     String resId = "";
+    SharedPref sharedPref;
+    ModelLogin modelLogin;
+    String type = "";
     ArrayList<ModelResTypeItems.Result.Item_data> itemData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search_items);
+        sharedPref = SharedPref.getInstance(mContext);
+        type = getIntent().getStringExtra("type");
+        modelLogin = sharedPref.getUserDetails(AppConstant.USER_DETAILS);
         resId = getIntent().getStringExtra("resid");
         itit();
     }
@@ -80,11 +89,11 @@ public class SearchItemsAct extends AppCompatActivity {
                 }
 
                 if (filteredData.size() == 0) {
-                    adapterResItems = new AdapterResItemsSearch(mContext, itemData);
+                    adapterResItems = new AdapterResItemsSearch(mContext, itemData, type);
                     binding.rvSearech.setAdapter(adapterResItems);
                     adapterResItems.notifyDataSetChanged();
                 } else {
-                    adapterResItems = new AdapterResItemsSearch(mContext, filteredData);
+                    adapterResItems = new AdapterResItemsSearch(mContext, filteredData, type);
                     binding.rvSearech.setAdapter(adapterResItems);
                     adapterResItems.notifyDataSetChanged();
                 }
@@ -116,6 +125,8 @@ public class SearchItemsAct extends AppCompatActivity {
 
                     if (jsonObject.getString("status").equals("1")) {
 
+                        Log.e("fsdfsdfds", "response = " + response);
+
                         JSONArray resultArray = jsonObject.getJSONArray("result");
                         JSONObject jsonObject1 = resultArray.getJSONObject(0);
                         String itemsString = jsonObject1.getString("item_data");
@@ -134,12 +145,12 @@ public class SearchItemsAct extends AppCompatActivity {
                         LinearLayoutManager layoutManager =
                                 new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
 
-                        adapterResItems = new AdapterResItemsSearch(mContext, itemData);
+                        adapterResItems = new AdapterResItemsSearch(mContext, itemData, type);
                         // binding.rvSearech.setLayoutManager(layoutManager);
                         binding.rvSearech.setAdapter(adapterResItems);
 
                     } else {
-                        adapterResItems = new AdapterResItemsSearch(mContext, null);
+                        adapterResItems = new AdapterResItemsSearch(mContext, null, type);
                         binding.rvSearech.setAdapter(adapterResItems);
                     }
 

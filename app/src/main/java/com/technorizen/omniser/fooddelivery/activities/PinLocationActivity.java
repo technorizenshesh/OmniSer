@@ -18,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -28,6 +29,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.gson.Gson;
 import com.technorizen.omniser.R;
 import com.technorizen.omniser.databinding.ActivityPinLocationBinding;
@@ -40,6 +45,7 @@ import com.technorizen.omniser.utils.SharedPref;
 
 import org.json.JSONObject;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -63,7 +69,9 @@ public class PinLocationActivity extends AppCompatActivity implements LocationLi
     Context mContext = PinLocationActivity.this;
     SharedPref sharedPref;
     ModelLogin modelLogin;
-    String type = "",id="";
+    String type = "", id = "";
+    private int AUTOCOMPLETE_REQUEST_CODE_DIALOG_PICK = 1001;
+    private LatLng pickUpLatLng;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -74,11 +82,12 @@ public class PinLocationActivity extends AppCompatActivity implements LocationLi
         modelLogin = sharedPref.getUserDetails(AppConstant.USER_DETAILS);
         ProjectUtil.changeStatusBarColor(PinLocationActivity.this);
 
+        Places.initialize(getApplicationContext(), getString(R.string.places_api_key));
+
         try {
             type = getIntent().getStringExtra("type");
             id = getIntent().getStringExtra("id");
-        } catch (Exception e){
-
+        } catch (Exception e) {
         }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -126,6 +135,35 @@ public class PinLocationActivity extends AppCompatActivity implements LocationLi
                 });
             }
         });
+
+        binding.tvAddress.setOnClickListener(v -> {
+            List<Place.Field> fields = Arrays.asList(Place.Field.ID,
+                    Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS);
+            Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this);
+            startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE_DIALOG_PICK);
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE_DIALOG_PICK) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                pickUpLatLng = place.getLatLng();
+                try {
+                    lat = pickUpLatLng.latitude;
+                    lng = pickUpLatLng.longitude;
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pickUpLatLng, 18.0f));
+                    binding.tvAddress.setText(getCompleteAddressString(PinLocationActivity.this, lat, lng));
+                    binding.imgMarker.startAnimation(myAnim);
+                } catch (Exception e) {
+                }
+            }
+        }
+
     }
 
     public static String getCompleteAddressString(Context context, double LATITUDE, double LONGITUDE) {
@@ -201,26 +239,26 @@ public class PinLocationActivity extends AppCompatActivity implements LocationLi
             intent.putExtra("add", binding.tvAddress.getText().toString().trim());
             intent.putExtra("lat", lat);
             intent.putExtra("lon", lng);
-            if(type.equals("home")) {
+            if (type.equals("home")) {
                 addLocationApi(type);
-            } else if(type.equals("work")) {
+            } else if (type.equals("work")) {
                 addLocationApi(type);
-            } else if(type.equals("map")) {
+            } else if (type.equals("map")) {
                 setResult(3, intent);
                 finish();
-            } else if(type.equals("edithome")) {
-                Log.e("sdfdsfds","edithome");
+            } else if (type.equals("edithome")) {
+                Log.e("sdfdsfds", "edithome");
                 editLocationApi(type);
-            } else if(type.equals("editwork")) {
-                Log.e("sdfdsfds","edithome");
+            } else if (type.equals("editwork")) {
+                Log.e("sdfdsfds", "edithome");
                 editLocationApi(type);
-            } else if(type.equals("register")) {
+            } else if (type.equals("register")) {
                 setResult(10, intent);
                 finish();
-            } else if(type.equals("pick")) {
+            } else if (type.equals("pick")) {
                 setResult(222, intent);
                 finish();
-            } else if(type.equals("drop")) {
+            } else if (type.equals("drop")) {
                 setResult(333, intent);
                 finish();
             } else {
@@ -233,10 +271,10 @@ public class PinLocationActivity extends AppCompatActivity implements LocationLi
     }
 
     private void editLocationApi(String type) {
-        ProjectUtil.showProgressDialog(mContext,false,getString(R.string.please_wait));
+        ProjectUtil.showProgressDialog(mContext, false, getString(R.string.please_wait));
         Call<ResponseBody> call = ApiFactory.loadInterface().editRecentLocation(modelLogin.getResult().getId(),
                 binding.tvAddress.getText().toString().trim(),
-                id,String.valueOf(lat),String.valueOf(lng));
+                id, String.valueOf(lat), String.valueOf(lng));
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -247,17 +285,17 @@ public class PinLocationActivity extends AppCompatActivity implements LocationLi
                     String responseString = response.body().string();
                     JSONObject jsonObject = new JSONObject(responseString);
 
-                    if(jsonObject.getString("status").equals("1")) {
+                    if (jsonObject.getString("status").equals("1")) {
 
-                        Log.e("dfasfasd","response = " + response);
-                        Log.e("dfasfasd","responseString = " + responseString);
+                        Log.e("dfasfasd", "response = " + response);
+                        Log.e("dfasfasd", "responseString = " + responseString);
 
-                        ModelLocations modelLocations = new Gson().fromJson(responseString,ModelLocations.class);
-                        sharedPref.setLocationModel(AppConstant.LOCATION_DETAILS,modelLocations);
+                        ModelLocations modelLocations = new Gson().fromJson(responseString, ModelLocations.class);
+                        sharedPref.setLocationModel(AppConstant.LOCATION_DETAILS, modelLocations);
 
-                        Log.e("sdfdsfds","type = " + type);
+                        Log.e("sdfdsfds", "type = " + type);
 
-                        if(type.equals("edithome")) {
+                        if (type.equals("edithome")) {
                             Intent intent = new Intent();
                             intent.putExtra("add", binding.tvAddress.getText().toString().trim());
                             intent.putExtra("lat", lat);
@@ -265,7 +303,7 @@ public class PinLocationActivity extends AppCompatActivity implements LocationLi
                             intent.putExtra("data", modelLocations);
                             setResult(6, intent);
                             finish();
-                        } else if(type.equals("editwork")) {
+                        } else if (type.equals("editwork")) {
                             Intent intent = new Intent();
                             intent.putExtra("add", binding.tvAddress.getText().toString().trim());
                             intent.putExtra("lat", lat);
@@ -280,7 +318,7 @@ public class PinLocationActivity extends AppCompatActivity implements LocationLi
 
                 } catch (Exception e) {
                     Toast.makeText(mContext, "Exception = " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("Exception","Exception = " + e.getMessage());
+                    Log.e("Exception", "Exception = " + e.getMessage());
                 }
 
             }
@@ -289,15 +327,15 @@ public class PinLocationActivity extends AppCompatActivity implements LocationLi
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 ProjectUtil.pauseProgressDialog();
                 Toast.makeText(mContext, t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("onFailure","onFailure = " + t.getMessage());
+                Log.e("onFailure", "onFailure = " + t.getMessage());
             }
         });
     }
 
     private void addLocationApi(String type) {
-        ProjectUtil.showProgressDialog(mContext,false,getString(R.string.please_wait));
+        ProjectUtil.showProgressDialog(mContext, false, getString(R.string.please_wait));
         Call<ResponseBody> call = ApiFactory.loadInterface().addRecentLocation(modelLogin.getResult().getId()
-        ,binding.tvAddress.getText().toString().trim(),String.valueOf(lat),String.valueOf(lng),type);
+                , binding.tvAddress.getText().toString().trim(), String.valueOf(lat), String.valueOf(lng), type);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -308,11 +346,11 @@ public class PinLocationActivity extends AppCompatActivity implements LocationLi
                     String responseString = response.body().string();
                     JSONObject jsonObject = new JSONObject(responseString);
 
-                    if(jsonObject.getString("status").equals("1")) {
-                        ModelLocations modelLocations = new Gson().fromJson(responseString,ModelLocations.class);
-                        sharedPref.setLocationModel(AppConstant.LOCATION_DETAILS,modelLocations);
+                    if (jsonObject.getString("status").equals("1")) {
+                        ModelLocations modelLocations = new Gson().fromJson(responseString, ModelLocations.class);
+                        sharedPref.setLocationModel(AppConstant.LOCATION_DETAILS, modelLocations);
 
-                        if(type.equals("home")) {
+                        if (type.equals("home")) {
                             Intent intent = new Intent();
                             intent.putExtra("add", binding.tvAddress.getText().toString().trim());
                             intent.putExtra("lat", lat);
@@ -320,7 +358,7 @@ public class PinLocationActivity extends AppCompatActivity implements LocationLi
                             intent.putExtra("data", modelLocations);
                             setResult(5, intent);
                             finish();
-                        } else if(type.equals("work")) {
+                        } else if (type.equals("work")) {
                             Intent intent = new Intent();
                             intent.putExtra("add", binding.tvAddress.getText().toString().trim());
                             intent.putExtra("lat", lat);
@@ -342,7 +380,7 @@ public class PinLocationActivity extends AppCompatActivity implements LocationLi
 
                 } catch (Exception e) {
                     Toast.makeText(mContext, "Exception = " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("Exception","Exception = " + e.getMessage());
+                    Log.e("Exception", "Exception = " + e.getMessage());
                 }
 
             }
@@ -351,7 +389,7 @@ public class PinLocationActivity extends AppCompatActivity implements LocationLi
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 ProjectUtil.pauseProgressDialog();
                 Toast.makeText(mContext, t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("onFailure","onFailure = " + t.getMessage());
+                Log.e("onFailure", "onFailure = " + t.getMessage());
             }
         });
     }

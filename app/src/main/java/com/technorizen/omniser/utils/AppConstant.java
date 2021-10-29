@@ -15,6 +15,7 @@ public interface AppConstant {
     String GROCERY = "grocery";
     String PHARMACY = "pharmacy";
     String FOOD = "food";
+    String WALLET = "wallet";
     String DevADD = "dev_address";
     String Devlat = "dev_lat";
     String Devlon = "dev_lon";
@@ -23,4 +24,5 @@ public interface AppConstant {
     String M = "m";
     String DRIVER_LAT_LON = "driverslatlon";
     String TAXI = "taxi";
+
 }

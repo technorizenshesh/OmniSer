@@ -140,7 +140,8 @@ public class MyBookingActivity extends AppCompatActivity {
     }
 
     public void payNowClicked(ModelTaxiHistory.Result data, String payMethod, int position) {
-        if(payMethod.equalsIgnoreCase("cash")) {
+        if(payMethod.equalsIgnoreCase("cash") ||
+                payMethod.equalsIgnoreCase("wallet")) {
             doPayment(data,data.getId(),payMethod,data.getEstimate_charge_amount(),position);
         } else {
             startActivity(new Intent(mContext, PaypalWebviewAct.class)

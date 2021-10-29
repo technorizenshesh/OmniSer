@@ -2,7 +2,9 @@ package com.technorizen.omniser.fooddelivery.adapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,6 +112,15 @@ public class AdapterMyOrders extends RecyclerView.Adapter<AdapterMyOrders.Adapte
 
         Dialog dialog = new Dialog(mContext, WindowManager.LayoutParams.MATCH_PARENT);
         dialog.setContentView(R.layout.orders_food_detail_dialog);
+
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP)
+                    dialog.dismiss();
+                return false;
+            }
+        });
 
         ProjectUtil.changeDialogStatusBar(dialog,mContext);
 

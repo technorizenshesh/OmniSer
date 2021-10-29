@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Aksha_data/OmniSer_Backup_project/OmniSer/app/src/main/res/drawable/green_below_round_back.xml" value="0.2203125" />
+        <entry key="..\:/Aksha_data/OmniSer_Backup_project/OmniSer/app/src/main/res/drawable/white_above_back.xml" value="0.2203125" />
+        <entry key="..\:/Aksha_data/OmniSer_Backup_project/OmniSer/app/src/main/res/layout/activity_wallet.xml" value="0.20416666666666666" />
+        <entry key="..\:/Aksha_data/OmniSer_Backup_project/OmniSer/app/src/main/res/layout/adapter_food_options.xml" value="0.2" />
+        <entry key="..\:/Aksha_data/OmniSer_Backup_project/OmniSer/app/src/main/res/layout/adapter_grocery_options.xml" value="0.20416666666666666" />
+        <entry key="..\:/Aksha_data/OmniSer_Backup_project/OmniSer/app/src/main/res/layout/adapter_taxi_booking.xml" value="0.20416666666666666" />
+        <entry key="..\:/Aksha_data/OmniSer_Backup_project/OmniSer/app/src/main/res/layout/adapter_transaction.xml" value="0.20416666666666666" />
+        <entry key="..\:/Aksha_data/OmniSer_Backup_project/OmniSer/app/src/main/res/layout/add_money_dialog.xml" value="0.20416666666666666" />
+        <entry key="..\:/Aksha_data/OmniSer_Backup_project/OmniSer/app/src/main/res/layout/apply_coupon_dialog.xml" value="0.1" />
+        <entry key="..\:/Aksha_data/OmniSer_Backup_project/OmniSer/app/src/main/res/layout/bottom_taxi_list_dialog.xml" value="0.1" />
+        <entry key="..\:/Aksha_data/OmniSer_Backup_project/OmniSer/app/src/main/res/layout/change_language_dialog.xml" value="0.20416666666666666" />
+        <entry key="..\:/Aksha_data/OmniSer_Backup_project/OmniSer/app/src/main/res/layout/food_item_detail_dialog.xml" value="0.2" />
+        <entry key="..\:/Aksha_data/OmniSer_Backup_project/OmniSer/app/src/main/res/layout/grocery_item_detail_dialog.xml" value="0.20416666666666666" />
+        <entry key="..\:/Aksha_data/OmniSer_Backup_project/OmniSer/app/src/main/res/layout/send_money_dialog.xml" value="0.20416666666666666" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project>

@@ -5,7 +5,9 @@ import androidx.databinding.DataBindingUtil;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
@@ -51,6 +53,15 @@ public class PharmacyTrackingActivity extends AppCompatActivity  implements OnMa
         dialog.setContentView(R.layout.food_order_summary_dialog);
 
         ImageView ivBack = dialog.findViewById(R.id.ivBack);
+
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP)
+                    dialog.dismiss();
+                return false;
+            }
+        });
 
         ivBack.setOnClickListener(v -> {
             dialog.dismiss();

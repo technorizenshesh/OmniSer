@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.annotation.TargetApi;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -42,8 +43,8 @@ public class PaypalWebviewAct extends AppCompatActivity {
 
     Context mContext = PaypalWebviewAct.this;
     ActivityPaypalWebviewBinding binding;
-    HashMap<String,String> param = new HashMap<>();
-    String type = "",amount = "",id="",taxiPayType="";
+    HashMap<String, String> param = new HashMap<>();
+    String type = "", amount = "", id = "", taxiPayType = "";
     String loadPaymentURL = "";
     SharedPref sharedPref;
     ModelLogin modelLogin;
@@ -53,7 +54,7 @@ public class PaypalWebviewAct extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_paypal_webview);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_paypal_webview);
 
         sharedPref = SharedPref.getInstance(mContext);
         modelLogin = sharedPref.getUserDetails(AppConstant.USER_DETAILS);
@@ -62,19 +63,19 @@ public class PaypalWebviewAct extends AppCompatActivity {
         amount = getIntent().getStringExtra("amount");
         id = getIntent().getStringExtra("id");
 
-        loadPaymentURL = "https://myspotbh.com/paypal/products/buy?id="+
-                id+"&price="+amount+"&name="+modelLogin.getResult().getName();
+        loadPaymentURL = "https://myspotbh.com/paypal/products/buy?id=" +
+                id + "&price=" + amount + "&name=" + modelLogin.getResult().getName();
 
-        if(type.equals(AppConstant.FOOD)) {
+        if (type.equals(AppConstant.FOOD)) {
             param = (HashMap<String, String>) getIntent().getSerializableExtra("param");
-        } else if(type.equals(AppConstant.GROCERY)) {
+        } else if (type.equals(AppConstant.GROCERY)) {
             param = (HashMap<String, String>) getIntent().getSerializableExtra("param");
-        } else if(type.equals(AppConstant.PHARMACY)) {
+        } else if (type.equals(AppConstant.PHARMACY)) {
             param = (HashMap<String, String>) getIntent().getSerializableExtra("param");
-        } else if(type.equals(AppConstant.TAXI)) {
+        } else if (type.equals(AppConstant.TAXI)) {
             taxiPayType = getIntent().getStringExtra("payType");
             taxiData = (ModelTaxiHistory.Result) getIntent().getSerializableExtra("data");
-        } else if(type.equals(AppConstant.ON_DEMAND)) {
+        } else if (type.equals(AppConstant.ON_DEMAND)) {
             onDemanddata = (ModelInvoiceDetail) getIntent().getSerializableExtra("data");
         }
 
@@ -111,16 +112,18 @@ public class PaypalWebviewAct extends AppCompatActivity {
                 String completed = "PayPal checkout - Payment complete.";
                 if (url.contains("success")) {
                     Toast.makeText(PaypalWebviewAct.this, "Successful", Toast.LENGTH_SHORT).show();
-                    if(type.equals(AppConstant.FOOD)) {
+                    if (type.equals(AppConstant.FOOD)) {
                         bookingApi();
-                    } else if(type.equals(AppConstant.GROCERY)) {
+                    } else if (type.equals(AppConstant.GROCERY)) {
                         bookingApi();
-                    } else if(type.equals(AppConstant.PHARMACY)) {
+                    } else if (type.equals(AppConstant.PHARMACY)) {
                         bookingApi();
-                    } else if(type.equals(AppConstant.ON_DEMAND)) {
+                    } else if (type.equals(AppConstant.ON_DEMAND)) {
                         bookOnDemandServiceApi();
-                    } else if(type.equals(AppConstant.TAXI)) {
+                    } else if (type.equals(AppConstant.TAXI)) {
                         doPayment();
+                    } else if (type.equals(AppConstant.WALLET)) {
+                        addWalletAmount();
                     }
                     // bookingApi();
                 }
@@ -136,8 +139,46 @@ public class PaypalWebviewAct extends AppCompatActivity {
 
     }
 
+    private void addWalletAmount() {
+        ProjectUtil.showProgressDialog(mContext, false, getString(R.string.please_wait));
+        Call<ResponseBody> call = ApiFactory.loadInterface().addWalletAmount(
+                modelLogin.getResult().getId(),amount);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                ProjectUtil.pauseProgressDialog();
+
+                Log.e("kljsdhfkhdklsf", "response = " + response);
+
+                try {
+                    String responseString = response.body().string();
+                    JSONObject jsonObject = new JSONObject(responseString);
+
+                    if (jsonObject.getString("status").equals("1")) {
+                        finish();
+                        startActivity(new Intent(mContext,WalletActivity.class));
+                        Toast.makeText(mContext, "Success", Toast.LENGTH_SHORT).show();
+                    } else {}
+
+                } catch (Exception e) {
+                    Toast.makeText(mContext, "Exception = " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("Exception", "Exception = " + e.getMessage());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                ProjectUtil.pauseProgressDialog();
+                Toast.makeText(mContext, t.getMessage(), Toast.LENGTH_SHORT).show();
+                // getServiceTypes();
+                Log.e("onFailure", "onFailure = " + t.getMessage());
+            }
+        });
+    }
+
     private void bookOnDemandServiceApi() {
-        ProjectUtil.showProgressDialog(mContext,false,"Please wait...");
+        ProjectUtil.showProgressDialog(mContext, false, "Please wait...");
         Call<ResponseBody> call = null;
 
         call = ApiFactory.loadInterface().bookOnDemandServiceApi(
@@ -156,9 +197,9 @@ public class PaypalWebviewAct extends AppCompatActivity {
                     String responseString = response.body().string();
                     JSONObject jsonObject = new JSONObject(responseString);
 
-                    Log.e("hjdhjkhfjksd","responseString = " + response);
+                    Log.e("hjdhjkhfjksd", "responseString = " + response);
 
-                    if(jsonObject.getString("status").equals("1")) {
+                    if (jsonObject.getString("status").equals("1")) {
                         finishAffinity();
                         mContext.startActivity(new Intent(mContext, DashboardActivity.class));
                         Toast.makeText(mContext, "Success", Toast.LENGTH_SHORT).show();
@@ -168,7 +209,7 @@ public class PaypalWebviewAct extends AppCompatActivity {
 
                 } catch (Exception e) {
                     Toast.makeText(mContext, "Exception = " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("Exception","Exception = " + e.getMessage());
+                    Log.e("Exception", "Exception = " + e.getMessage());
                 }
 
             }
@@ -177,26 +218,26 @@ public class PaypalWebviewAct extends AppCompatActivity {
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 ProjectUtil.pauseProgressDialog();
                 Toast.makeText(mContext, t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("onFailure","onFailure = " + t.getMessage());
+                Log.e("onFailure", "onFailure = " + t.getMessage());
             }
         });
     }
 
     private void doPayment() {
 
-        ProjectUtil.showProgressDialog(mContext,false,getString(R.string.please_wait));
+        ProjectUtil.showProgressDialog(mContext, false, getString(R.string.please_wait));
         Api api = ApiFactory.loadInterface();
 
-        Log.e("sfddsfdsfdsf","user_id = " + modelLogin.getResult().getId());
+        Log.e("sfddsfdsfdsf", "user_id = " + modelLogin.getResult().getId());
 
-        HashMap<String,String> params = new HashMap<>();
-        params.put("request_id",taxiData.getId());
-        params.put("user_id",modelLogin.getResult().getId());
-        params.put("total_amount",taxiData.getEstimate_charge_amount());
-        params.put("payment_type",taxiPayType);
-        params.put("payment_id","");
+        HashMap<String, String> params = new HashMap<>();
+        params.put("request_id", taxiData.getId());
+        params.put("user_id", modelLogin.getResult().getId());
+        params.put("total_amount", taxiData.getEstimate_charge_amount());
+        params.put("payment_type", taxiPayType);
+        params.put("payment_id", "");
 
-        Log.e("hjadkjshakjdhkjas","params = " + params);
+        Log.e("hjadkjshakjdhkjas", "params = " + params);
 
         Call<ResponseBody> call = api.doTaxiPayment(params);
         call.enqueue(new Callback<ResponseBody>() {
@@ -205,18 +246,18 @@ public class PaypalWebviewAct extends AppCompatActivity {
 
                 ProjectUtil.pauseProgressDialog();
 
-                Log.e("kghkljsdhkljf","response = " + response);
+                Log.e("kghkljsdhkljf", "response = " + response);
 
                 try {
                     String stringResponse = response.body().string();
                     JSONObject jsonObject = new JSONObject(stringResponse);
 
-                    Log.e("kjagsdkjgaskjd","stringResponse = " + response);
-                    Log.e("kjagsdkjgaskjd","stringResponse = " + stringResponse);
+                    Log.e("kjagsdkjgaskjd", "stringResponse = " + response);
+                    Log.e("kjagsdkjgaskjd", "stringResponse = " + stringResponse);
 
                     if (jsonObject.getString("status").equals("1")) {
                         finishAffinity();
-                        startActivity(new Intent(mContext,DashboardActivity.class));
+                        startActivity(new Intent(mContext, DashboardActivity.class));
                         Toast.makeText(mContext, "Success", Toast.LENGTH_SHORT).show();
                     } else {
 
@@ -229,7 +270,7 @@ public class PaypalWebviewAct extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 ProjectUtil.pauseProgressDialog();
-                Log.e("kjagsdkjgaskjd","stringResponse = " + t.getMessage());
+                Log.e("kjagsdkjgaskjd", "stringResponse = " + t.getMessage());
             }
 
         });
@@ -237,7 +278,7 @@ public class PaypalWebviewAct extends AppCompatActivity {
     }
 
     private void bookingApi() {
-        ProjectUtil.showProgressDialog(mContext,false,mContext.getString(R.string.please_wait));
+        ProjectUtil.showProgressDialog(mContext, false, mContext.getString(R.string.please_wait));
         Call<ResponseBody> call = ApiFactory.loadInterface().foodBookingApiNEW(param);
 
         call.enqueue(new Callback<ResponseBody>() {
@@ -248,12 +289,12 @@ public class PaypalWebviewAct extends AppCompatActivity {
 
                     String stringResponse = response.body().string();
 
-                    Log.e("responseresponse","response = " + stringResponse);
-                    Log.e("responseresponse","response = " + response);
+                    Log.e("responseresponse", "response = " + stringResponse);
+                    Log.e("responseresponse", "response = " + response);
 
-                    sharedPref.setRestaurantModel(AppConstant.RESTAURANT_DATA,null);
+                    sharedPref.setRestaurantModel(AppConstant.RESTAURANT_DATA, null);
                     JSONObject jsonObject = new JSONObject(stringResponse);
-                    if(jsonObject.getString("status").equalsIgnoreCase("1")) {
+                    if (jsonObject.getString("status").equalsIgnoreCase("1")) {
                         //  ModelCartItems modelCartItems = new Gson().fromJson(stringResponse,ModelCartItems.class);
                         Toast.makeText(PaypalWebviewAct.this, getString(R.string.success), Toast.LENGTH_SHORT).show();
                         finish();
@@ -263,7 +304,7 @@ public class PaypalWebviewAct extends AppCompatActivity {
                         startActivity(intent);
 
                     } else {
-                        Toast.makeText(PaypalWebviewAct.this, getString(R.string.insuffeient_amount), Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(PaypalWebviewAct.this, getString(R.string.insuffeient_amount), Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception e) {
@@ -276,7 +317,7 @@ public class PaypalWebviewAct extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 ProjectUtil.pauseProgressDialog();
-                Log.e("anErroranError","anError = " + t.getMessage());
+                Log.e("anErroranError", "anError = " + t.getMessage());
             }
 
         });
@@ -285,7 +326,7 @@ public class PaypalWebviewAct extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(binding.webView.canGoBack()) binding.webView.goBack();
+        if (binding.webView.canGoBack()) binding.webView.goBack();
         else finish();
     }
 

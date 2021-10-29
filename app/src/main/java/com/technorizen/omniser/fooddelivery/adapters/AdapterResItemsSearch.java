@@ -2,8 +2,10 @@ package com.technorizen.omniser.fooddelivery.adapters;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.technorizen.omniser.R;
 import com.technorizen.omniser.fooddelivery.activities.RestaurantDetailsActivity;
 import com.technorizen.omniser.fooddelivery.models.ModelResTypeItems;
+import com.technorizen.omniser.grocerydelivery.adapters.AdapterGroceryOptions;
 import com.technorizen.omniser.models.ModelLogin;
 import com.technorizen.omniser.utils.ApiFactory;
 import com.technorizen.omniser.utils.AppConstant;
@@ -46,16 +49,20 @@ public class AdapterResItemsSearch extends
     SharedPref sharedPref;
     ModelLogin modelLogin;
     public static String toppingTotalMain;
-    static int count=1;
+    static int count = 1;
+    public static String optionPrice = "0", optionId = "";
     static double itemTotal = 0.0;
-    static double OptionitemTotal=0.0;
+    static double OptionitemTotal = 0.0;
     static int currentPosition = 0;
     static Dialog dialog;
-    int toppingTotal=0;
+    int toppingTotal = 0;
+    public static boolean isFirstTime = false;
+    String type = "";
 
-    public AdapterResItemsSearch(Context mContext,ArrayList<ModelResTypeItems.Result.Item_data> reslist) {
+    public AdapterResItemsSearch(Context mContext, ArrayList<ModelResTypeItems.Result.Item_data> reslist, String type) {
         this.mContext = mContext;
         this.itemList = reslist;
+        this.type = type;
         sharedPref = SharedPref.getInstance(mContext);
         modelLogin = sharedPref.getUserDetails(AppConstant.USER_DETAILS);
     }
@@ -64,7 +71,7 @@ public class AdapterResItemsSearch extends
     @Override
     public AdapterResItemsSearch.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.adapter_res_tems,parent,false);
+                .inflate(R.layout.adapter_res_tems, parent, false);
         return new AdapterResItemsSearch.MyViewHolder(view);
     }
 
@@ -73,9 +80,9 @@ public class AdapterResItemsSearch extends
 
         ModelResTypeItems.Result.Item_data data = itemList.get(position);
 
-        Log.e("ggggdsfdsfs","datadatadata = " + data.getItem_name());
+        Log.e("ggggdsfdsfs", "datadatadata = " + data.getItem_name());
 
-        if("es".equals(sharedPref.getLanguage("lan"))) {
+        if ("es".equals(sharedPref.getLanguage("lan"))) {
             holder.tvName.setText(data.getItem_name_es());
             holder.tvShortDesp.setText(data.getShort_description_es());
         } else {
@@ -85,25 +92,25 @@ public class AdapterResItemsSearch extends
 
         holder.tvPrice.setText(AppConstant.DOLLER_SIGN + data.getItem_price());
 
-        if(!data.getTag().equals("")) {
+        if (!data.getTag().equals("")) {
             holder.tvHashtag.setText(data.getTag());
             holder.tvHashtag.setVisibility(View.VISIBLE);
         } else {
             holder.tvHashtag.setVisibility(View.INVISIBLE);
         }
 
-        Log.e("item_quantity","item_quantity = " + data.getItem_quantity());
-        Log.e("item_quantity","getItem_name = " + data.getItem_name());
+        Log.e("item_quantity", "item_quantity = " + data.getItem_quantity());
+        Log.e("item_quantity", "getItem_name = " + data.getItem_name());
 
         Glide.with(mContext)
                 .load(AppConstant.IMAGE_URL + data.getImage())
                 .apply(new RequestOptions()
-                        .override(400,400))
+                        .override(400, 400))
                 .into(holder.ivItemImage);
 
         holder.tvAdd.setOnClickListener(v -> {
             currentPosition = position;
-            openItemDetailDialog(data,position);
+            openItemDetailDialog(data, position);
         });
 
     }
@@ -118,38 +125,69 @@ public class AdapterResItemsSearch extends
         return position;
     }
 
-    public static void updatePrice(String toppingTotal,String price) {
-        Log.e("sdfsfsdf","Topping updatePrice");
-        Log.e("sdfsfsdf","toppingTotal = " + toppingTotal);
-        Log.e("sdfsfsdf","itemTotal = " + itemTotal);
-        Log.e("sdfsfsdf","count = " + count);
-        Log.e("sdfsfsdf","currentPosition = " + currentPosition);
+    public static void updatePrice(String toppingTotal, String price) {
+        Log.e("sdfsfsdf", "Topping updatePrice");
+        Log.e("sdfsfsdf", "toppingTotal = " + toppingTotal);
+        Log.e("sdfsfsdf", "itemTotal = " + itemTotal);
+        Log.e("sdfsfsdf", "count = " + count);
+        Log.e("sdfsfsdf", "currentPosition = " + currentPosition);
 
         itemTotal = Double.parseDouble(price) * count;
         itemTotal = itemTotal + (count * Double.parseDouble(toppingTotal));
         // Log.e("sdfsfsdf","itemList.get(currentPosition).getItem_price() = " + itemList.get(currentPosition).getItem_price());
-        Log.e("sdfsfsdf","currentPosition = " + currentPosition);
-        Log.e("sdfsfsdf","itemTotal after update = " + itemTotal);
+        Log.e("sdfsfsdf", "currentPosition = " + currentPosition);
+        Log.e("sdfsfsdf", "itemTotal after update = " + itemTotal);
 
         TextView textPrice = dialog.findViewById(R.id.tvPrice);
         textPrice.setText(AppConstant.DOLLER_SIGN + " " + itemTotal);
     }
 
-    private void openItemDetailDialog(ModelResTypeItems.Result.Item_data data,int pos) {
+    public static void updatePriceGrocery(String toppingTotal) {
+        Log.e("sdfsfsdf", "Topping updatePrice");
+        Log.e("sdfsfsdf", "toppingTotal = " + toppingTotal);
+        Log.e("sdfsfsdf", "itemTotal = " + itemTotal);
+        Log.e("sdfsfsdf", "count = " + count);
 
+        // itemTotal = Double.parseDouble(itemList.get(currentPosition).getItem_price()) * count;
+        itemTotal = (count * Double.parseDouble(toppingTotal));
+//        Log.e("sdfsfsdf","itemList.get(currentPosition).getItem_price() = " + itemList.get(currentPosition).getItem_price());
+        Log.e("sdfsfsdf", "currentPosition = " + currentPosition);
+        Log.e("sdfsfsdf", "itemTotal after update = " + itemTotal);
+
+        TextView tvPrice = dialog.findViewById(R.id.tvPrice);
+        tvPrice.setText(AppConstant.DOLLER_SIGN + " " + itemTotal);
+
+    }
+
+    private void openItemDetailDialog(ModelResTypeItems.Result.Item_data data, int pos) {
+
+        optionId = "";
         itemTotal = 0.0;
+        count = 1;
         currentPosition = pos;
+        isFirstTime = false;
+        optionPrice = "0";
 
         dialog = new Dialog(mContext, android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.food_item_detail_dialog);
-        dialog.setCancelable(true);
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP)
+                    dialog.dismiss();
+                return false;
+            }
+        });
 
         ImageView ivItemImage = dialog.findViewById(R.id.ivItemImage);
         ImageView ivMinus = dialog.findViewById(R.id.ivMinus);
         ImageView ivPlus = dialog.findViewById(R.id.ivPlus);
         ImageView ivBack = dialog.findViewById(R.id.ivBack);
         TextView tvItemName = dialog.findViewById(R.id.tvItemName);
+        TextView tvOptionOrTopping = dialog.findViewById(R.id.tvOptionOrTopping);
+        TextView tvOptionOption = dialog.findViewById(R.id.tvOptionOption);
+        ListView optionListview = dialog.findViewById(R.id.optionListview);
         ListView toppingListView = dialog.findViewById(R.id.toppingListView);
         TextView tvQuantity = dialog.findViewById(R.id.tvQuantity);
         TextView tvItemDesp = dialog.findViewById(R.id.tvItemDesp);
@@ -159,18 +197,31 @@ public class AdapterResItemsSearch extends
         itemTotal = Double.parseDouble(data.getItem_price());
         Glide.with(mContext)
                 .load(AppConstant.IMAGE_URL + data.getImage())
-                .apply(new RequestOptions().override(400,400))
+                .apply(new RequestOptions().override(400, 400))
                 .into(ivItemImage);
 
         tvItemName.setText(data.getItem_name());
         tvPrice.setText(AppConstant.DOLLER_SIGN + " " + data.getItem_price());
         tvItemDesp.setText(data.getDescription());
 
-        AdapterFoodTopping adapterFoodTopping = new AdapterFoodTopping(mContext,data.getTopping(),data.getItem_price());
-        toppingListView.setAdapter(adapterFoodTopping);
+        if (AppConstant.GROCERY.equals(type)) {
+            AdapterGroceryOptions adapterFoodTopping = new AdapterGroceryOptions(mContext, data.getTopping(),true);
+            toppingListView.setAdapter(adapterFoodTopping);
+        } else if (AppConstant.PHARMACY.equals(type)) {
+            tvOptionOption.setVisibility(View.GONE);
+            optionListview.setVisibility(View.GONE);
+            toppingListView.setVisibility(View.GONE);
+            tvOptionOrTopping.setVisibility(View.GONE);
+        } else {
+            AdapterFoodTopping adapterFoodTopping = new AdapterFoodTopping(mContext, data.getTopping(), data.getItem_price());
+            toppingListView.setAdapter(adapterFoodTopping);
+
+            AdapterFoodOptions adapterFoodOptions = new AdapterFoodOptions(mContext, data.getExtra_options());
+            optionListview.setAdapter(adapterFoodOptions);
+        }
 
         ivMinus.setOnClickListener(v -> {
-            if(count > 1) {
+            if (count > 1) {
                 count--;
                 data.setItem_quantity(String.valueOf(count));
                 tvQuantity.setText(data.getItem_quantity());
@@ -191,13 +242,13 @@ public class AdapterResItemsSearch extends
 
         tvAddItem.setOnClickListener(v -> {
 
-            Log.e("fsdfsdf","getSelectedToppingIds = " + getSelectedToppingIds(data));
+            Log.e("fsdfsdf", "getSelectedToppingIds = " + getSelectedToppingIds(data));
 
-            if(data.getItem_quantity().equals("0") || data.getItem_quantity().equals("")) {
+            if ("0".equals(data.getItem_quantity()) || "".equals(data.getItem_quantity())) {
                 data.setItem_quantity("1");
-                addToCart(tvQuantity.getText().toString().trim(),String.valueOf(itemTotal),getSelectedToppingIds(data),data,dialog);
+                addToCart(tvQuantity.getText().toString().trim(), String.valueOf(itemTotal), getSelectedToppingIds(data), data, dialog);
             } else {
-                addToCart(tvQuantity.getText().toString().trim(),String.valueOf(itemTotal),getSelectedToppingIds(data),data,dialog);
+                addToCart(tvQuantity.getText().toString().trim(), String.valueOf(itemTotal), getSelectedToppingIds(data), data, dialog);
             }
 
             itemTotal = 0.0;
@@ -221,29 +272,29 @@ public class AdapterResItemsSearch extends
 
     private String getSelectedToppingIds(ModelResTypeItems.Result.Item_data data) {
         ArrayList<String> tempList = new ArrayList<>();
-        if(data.getTopping() == null || data.getTopping().size() == 0) {
+        if (data.getTopping() == null || data.getTopping().size() == 0) {
             return "";
         } else {
-            for(int i=0;i<data.getTopping().size();i++) {
-                Log.e("sdfsfsdf","inside For = " + i);
-                Log.e("sdfsfsdf","sdfsfsdf isChecked = " + data.getTopping().get(i).isChecked());
-                if(data.getTopping().get(i).isChecked()) {
+            for (int i = 0; i < data.getTopping().size(); i++) {
+                Log.e("sdfsfsdf", "inside For = " + i);
+                Log.e("sdfsfsdf", "sdfsfsdf isChecked = " + data.getTopping().get(i).isChecked());
+                if (data.getTopping().get(i).isChecked()) {
                     tempList.add(data.getTopping().get(i).getId());
                 }
             }
-            return TextUtils.join(",",tempList);
+            return TextUtils.join(",", tempList);
         }
     }
 
     private int getToppingTotal(ModelResTypeItems.Result.Item_data data) {
         toppingTotal = 0;
-        if(data.getTopping() == null || data.getTopping().size() == 0) {
+        if (data.getTopping() == null || data.getTopping().size() == 0) {
             return 0;
         } else {
-            for(int i=0;i<data.getTopping().size();i++) {
-                Log.e("sdfsfsdf","inside For = " + i);
-                Log.e("sdfsfsdf","sdfsfsdf isChecked = " + data.getTopping().get(i).isChecked());
-                if(data.getTopping().get(i).isChecked()) {
+            for (int i = 0; i < data.getTopping().size(); i++) {
+                Log.e("sdfsfsdf", "inside For = " + i);
+                Log.e("sdfsfsdf", "sdfsfsdf isChecked = " + data.getTopping().get(i).isChecked());
+                if (data.getTopping().get(i).isChecked()) {
                     toppingTotal = toppingTotal + Integer.parseInt(data.getTopping().get(i).getPrice());
                 }
             }
@@ -252,9 +303,9 @@ public class AdapterResItemsSearch extends
 
     }
 
-    private void deleteItems(String resId,String itemId,int position) {
-        ProjectUtil.showProgressDialog(mContext,true,mContext.getString(R.string.please_wait));
-        Call<ResponseBody> call = ApiFactory.loadInterface().deleteItemsApi(resId,itemId, modelLogin.getResult().getId());
+    private void deleteItems(String resId, String itemId, int position) {
+        ProjectUtil.showProgressDialog(mContext, true, mContext.getString(R.string.please_wait));
+        Call<ResponseBody> call = ApiFactory.loadInterface().deleteItemsApi(resId, itemId, modelLogin.getResult().getId());
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -264,11 +315,11 @@ public class AdapterResItemsSearch extends
 
                     String stringResponse = response.body().string();
 
-                    Log.e("responseresponse","response = " + stringResponse);
-                    Log.e("responseresponse","response = " + response);
+                    Log.e("responseresponse", "response = " + stringResponse);
+                    Log.e("responseresponse", "response = " + response);
 
                     JSONObject jsonObject = new JSONObject(stringResponse);
-                    if(jsonObject.getString("status").equalsIgnoreCase("1")) {
+                    if (jsonObject.getString("status").equalsIgnoreCase("1")) {
                         notifyDataSetChanged();
                     } else {
                         notifyDataSetChanged();
@@ -292,12 +343,12 @@ public class AdapterResItemsSearch extends
 
     }
 
-    private void addToCart(String quantity,String price,String topping,ModelResTypeItems.Result.Item_data data,Dialog dialog) {
-        ProjectUtil.showProgressDialog(mContext,true,mContext.getString(R.string.please_wait));
+    private void addToCart(String quantity, String price, String topping, ModelResTypeItems.Result.Item_data data, Dialog dialog) {
+        ProjectUtil.showProgressDialog(mContext, true, mContext.getString(R.string.please_wait));
         Call<ResponseBody> call = ApiFactory.loadInterface().addToCart(data.getId(),
                 modelLogin.getResult().getId(), quantity,
                 data.getStore_id(),
-                price,AppConstant.FOOD,topping);
+                price, AppConstant.FOOD, topping, "");
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -307,12 +358,12 @@ public class AdapterResItemsSearch extends
 
                     String stringResponse = response.body().string();
 
-                    Log.e("responseresponse","response = " + stringResponse);
-                    Log.e("responseresponse","response = " + response);
+                    Log.e("responseresponse", "response = " + stringResponse);
+                    Log.e("responseresponse", "response = " + response);
 
                     JSONObject jsonObject = new JSONObject(stringResponse);
-                    if(jsonObject.getString("status").equalsIgnoreCase("1")) {
-                        Log.e("sdgdsgdsgdsg","quantity = " + jsonObject.getString("quantity"));
+                    if (jsonObject.getString("status").equalsIgnoreCase("1")) {
+                        Log.e("sdgdsgdsgdsg", "quantity = " + jsonObject.getString("quantity"));
                         // data.setItem_quantity(jsonObject.getString("quantity"));
                         // ((RestaurantDetailsActivity) mContext).updateData(jsonObject.getString("cart_count"));
                         dialog.dismiss();
@@ -342,8 +393,8 @@ public class AdapterResItemsSearch extends
 
     @Override
     public int getItemCount() {
-        Log.e("ggggdsfdsfs","itemList = " + itemList.size());
-        if(itemList == null || itemList.size() == 0) {
+        Log.e("ggggdsfdsfs", "itemList = " + itemList.size());
+        if (itemList == null || itemList.size() == 0) {
             return 0;
         } else {
             return itemList.size();
@@ -353,8 +404,8 @@ public class AdapterResItemsSearch extends
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         RoundedImageView ivItemImage;
-        TextView tvName,tvPrice,tvShortDesp,tvAddToCart,tvHashtag,tvAdd;
-        ImageView ivMinus,ivPlus;
+        TextView tvName, tvPrice, tvShortDesp, tvAddToCart, tvHashtag, tvAdd;
+        ImageView ivMinus, ivPlus;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

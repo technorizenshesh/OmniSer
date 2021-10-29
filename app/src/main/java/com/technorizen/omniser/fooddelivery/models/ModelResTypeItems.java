@@ -80,13 +80,22 @@ public class ModelResTypeItems implements Serializable {
             private String item_category;
             private String short_description;
             private String short_description_es;
+            private String item_name_es;
             private String tag;
             private String description;
-            private String item_name_es;
             private String image;
             private String item_quantity;
             private String date_time;
             private ArrayList<Topping> topping;
+            private ArrayList<ExtraOptions> extra_options;
+
+            public ArrayList<ExtraOptions> getExtra_options() {
+                return extra_options;
+            }
+
+            public void setExtra_options(ArrayList<ExtraOptions> extra_options) {
+                this.extra_options = extra_options;
+            }
 
             public String getShort_description_es() {
                 return short_description_es;
@@ -183,7 +192,7 @@ public class ModelResTypeItems implements Serializable {
                 return this.date_time;
             }
 
-            public class Topping
+            public class Topping implements Serializable
             {
                 private String id;
 
@@ -244,6 +253,72 @@ public class ModelResTypeItems implements Serializable {
                 }
                 public String getPrice(){
                     return this.price;
+                }
+            }
+
+            public class ExtraOptions implements Serializable {
+
+                private String id;
+
+                private String item_id;
+
+                private String store_id;
+
+                private String value;
+
+                private String option_name;
+
+                private String option_price;
+
+                private String date_time;
+
+                public String getOption_name() {
+                    return option_name;
+                }
+
+                public void setOption_name(String option_name) {
+                    this.option_name = option_name;
+                }
+
+                public String getOption_price() {
+                    return option_price;
+                }
+
+                public void setOption_price(String option_price) {
+                    this.option_price = option_price;
+                }
+
+                public String getDate_time() {
+                    return date_time;
+                }
+
+                public void setDate_time(String date_time) {
+                    this.date_time = date_time;
+                }
+
+                public void setId(String id) {
+                    this.id = id;
+                }
+                public String getId(){
+                    return this.id;
+                }
+                public void setItem_id(String item_id){
+                    this.item_id = item_id;
+                }
+                public String getItem_id(){
+                    return this.item_id;
+                }
+                public void setStore_id(String store_id){
+                    this.store_id = store_id;
+                }
+                public String getStore_id(){
+                    return this.store_id;
+                }
+                public void setValue(String value){
+                    this.value = value;
+                }
+                public String getValue(){
+                    return this.value;
                 }
             }
 

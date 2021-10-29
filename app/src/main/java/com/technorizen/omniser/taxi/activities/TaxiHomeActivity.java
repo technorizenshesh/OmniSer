@@ -53,6 +53,9 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.SquareCap;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.gson.Gson;
 import com.technorizen.omniser.R;
 import com.technorizen.omniser.adapters.AdapterRecentsLocations;
@@ -70,6 +73,7 @@ import com.technorizen.omniser.utils.SharedPref;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -85,6 +89,8 @@ public class TaxiHomeActivity extends AppCompatActivity
         implements OnMapReadyCallback {
 
     private static final int REQUEST_CODE = 101;
+    private static int AUTOCOMPLETE_REQUEST_CODE_DIALOG_PICK = 1001;
+    private static int AUTOCOMPLETE_REQUEST_CODE_DIALOG_DROP = 1002;
     private static final int AUTOCOMPLETE_REQUEST_CODE = 3;
     Context mContext = TaxiHomeActivity.this;
     ActivityTaxiHomeBinding binding;
@@ -103,6 +109,7 @@ public class TaxiHomeActivity extends AppCompatActivity
     private Location currentLocation;
     PolylineOptions polylineOptions;
     String isPickUpOrDropOff = "";
+    Dialog recentDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,24 +171,32 @@ public class TaxiHomeActivity extends AppCompatActivity
     }
 
     private void recentLocationsDialog(ModelLocations modelLocations,String pickOrDrop) {
-        Dialog dialog = new Dialog(mContext, WindowManager.LayoutParams.MATCH_PARENT);
-        dialog.setContentView(R.layout.recent_locations_dialog);
+        recentDialog = new Dialog(mContext, WindowManager.LayoutParams.MATCH_PARENT);
+        recentDialog.setContentView(R.layout.recent_locations_dialog);
 
-        ProjectUtil.changeDialogStatusBar(dialog,mContext);
+        ProjectUtil.changeDialogStatusBar(recentDialog,mContext);
 
-        ImageView ivBack = dialog.findViewById(R.id.ivBack);
-        CardView cvLocation = dialog.findViewById(R.id.cvLocation);
-        ListView locationList = dialog.findViewById(R.id.locationList);
-        EditText etSerach = dialog.findViewById(R.id.etSerach);
+        ImageView ivBack = recentDialog.findViewById(R.id.ivBack);
+        CardView cvLocation = recentDialog.findViewById(R.id.cvLocation);
+        ListView locationList = recentDialog.findViewById(R.id.locationList);
+        EditText etSerach = recentDialog.findViewById(R.id.etSerach);
 
-        tvHomeAddress = dialog.findViewById(R.id.tvHomeAddress);
-        TextView tvSetCurrentLoc = dialog.findViewById(R.id.tvSetCurrentLoc);
-        TextView tvSetLocMap = dialog.findViewById(R.id.tvSetLocMap);
-        ivHomeEdit = dialog.findViewById(R.id.ivHomeEdit);
-        ivWorkEdit = dialog.findViewById(R.id.ivWorkEdit);
-        ivAddHomeAddress = dialog.findViewById(R.id.ivAddHomeAddress);
-        ivAddWorkAddress = dialog.findViewById(R.id.ivAddWorkAddress);
-        tvWorkAddress = dialog.findViewById(R.id.tvWorkAddress);
+        tvHomeAddress = recentDialog.findViewById(R.id.tvHomeAddress);
+        TextView tvSetCurrentLoc = recentDialog.findViewById(R.id.tvSetCurrentLoc);
+        TextView tvSetLocMap = recentDialog.findViewById(R.id.tvSetLocMap);
+        ivHomeEdit = recentDialog.findViewById(R.id.ivHomeEdit);
+        ivWorkEdit = recentDialog.findViewById(R.id.ivWorkEdit);
+        ivAddHomeAddress = recentDialog.findViewById(R.id.ivAddHomeAddress);
+        ivAddWorkAddress = recentDialog.findViewById(R.id.ivAddWorkAddress);
+        tvWorkAddress = recentDialog.findViewById(R.id.tvWorkAddress);
+
+        etSerach.setOnClickListener(v -> {
+//            List<Place.Field> fields = Arrays.asList(Place.Field.ID,
+//                    Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS);
+//            Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN,fields).build(this);
+//            if(pickOrDrop.equals("pick")) startActivityForResult(intent,AUTOCOMPLETE_REQUEST_CODE_DIALOG_PICK);
+//            else startActivityForResult(intent,AUTOCOMPLETE_REQUEST_CODE_DIALOG_DROP);
+        });
 
         if(modelLocations.getHome_location() != null) {
             tvHomeAddress.setText(modelLocations.getHome_location().getAddress());
@@ -211,10 +226,10 @@ public class TaxiHomeActivity extends AppCompatActivity
                     Double lat = Double.valueOf(recentLocation.getHome_location().getLat());
                     Double lon = Double.valueOf(recentLocation.getHome_location().getLon());
                     pickUpLatLng = new LatLng(lat,lon);
-                    if(pickUpLatLng != null && dropOffLatLng!=null){
+                    if(pickUpLatLng != null && dropOffLatLng!=null) {
                         drawRoute(pickUpLatLng,dropOffLatLng);
                     }
-                    dialog.dismiss();
+                    recentDialog.dismiss();
                 }
             } else {
                 if(!tvHomeAddress.getText().toString().trim().isEmpty()) {
@@ -225,7 +240,7 @@ public class TaxiHomeActivity extends AppCompatActivity
                     if(pickUpLatLng != null && dropOffLatLng!=null) {
                         drawRoute(pickUpLatLng,dropOffLatLng);
                     }
-                    dialog.dismiss();
+                    recentDialog.dismiss();
                 }
             }
 
@@ -244,7 +259,7 @@ public class TaxiHomeActivity extends AppCompatActivity
                     if(pickUpLatLng != null && dropOffLatLng!=null){
                         drawRoute(pickUpLatLng,dropOffLatLng);
                     }
-                    dialog.dismiss();
+                    recentDialog.dismiss();
                 }
             } else {
                 if(!tvWorkAddress.getText().toString().trim().isEmpty()) {
@@ -255,7 +270,7 @@ public class TaxiHomeActivity extends AppCompatActivity
                     if(pickUpLatLng != null && dropOffLatLng!=null){
                         drawRoute(pickUpLatLng,dropOffLatLng);
                     }
-                    dialog.dismiss();
+                    recentDialog.dismiss();
                 }
             }
 
@@ -291,7 +306,7 @@ public class TaxiHomeActivity extends AppCompatActivity
         });
 
         tvSetCurrentLoc.setOnClickListener(v -> {
-            dialog.dismiss();
+            recentDialog.dismiss();
             setCurrentLocation(pickOrDrop);
         });
 
@@ -299,14 +314,14 @@ public class TaxiHomeActivity extends AppCompatActivity
             Intent intent = new Intent(mContext, PinLocationActivity.class);
             intent.putExtra("type","map");
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
-            dialog.dismiss();
+            recentDialog.dismiss();
         });
 
         locationList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ModelLocations.Recent_location data = modelLocations.getRecent_location().get(position);
-                dialog.dismiss();
+                recentDialog.dismiss();
 
                 if(pickOrDrop.equals("pick")) {
                     binding.tvPickUp.setText(data.getAddress());
@@ -332,15 +347,15 @@ public class TaxiHomeActivity extends AppCompatActivity
             else
                 intent.putExtra("type","drop");
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
-            dialog.dismiss();
+            recentDialog.dismiss();
         });
 
         ivBack.setOnClickListener(v -> {
-            dialog.dismiss();
+            recentDialog.dismiss();
         });
 
         cvLocation.setOnClickListener(v -> {
-            dialog.dismiss();
+            recentDialog.dismiss();
             Intent intent = new Intent(mContext, PinLocationActivity.class);
             if(pickOrDrop.equals("pick"))
                 intent.putExtra("type","pick");
@@ -349,16 +364,16 @@ public class TaxiHomeActivity extends AppCompatActivity
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
         });
 
-        Window window = dialog.getWindow();
+        Window window = recentDialog.getWindow();
         WindowManager.LayoutParams wlp = window.getAttributes();
 
-        dialog.getWindow().setBackgroundDrawableResource(R.color.translucent_black);
+        recentDialog.getWindow().setBackgroundDrawableResource(R.color.translucent_black);
 
         wlp.gravity = Gravity.BOTTOM;
         wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
 
-        dialog.show();
+        recentDialog.show();
 
     }
 
@@ -528,8 +543,7 @@ public class TaxiHomeActivity extends AppCompatActivity
                         }
 
                     }
-                },
-                Looper.myLooper());
+                },Looper.myLooper());
 
     }
 
@@ -623,6 +637,11 @@ public class TaxiHomeActivity extends AppCompatActivity
             if(isPickUpOrDropOff.equals("pick")) {
                 binding.tvPickUp.setText(add);
                 pickUpLatLng = new LatLng(lat,lon);
+                if(pickUpLatLng != null && dropOffLatLng != null) {
+                    drawRoute(pickUpLatLng,dropOffLatLng);
+                } else {
+                    Toast.makeText(mContext, getString(R.string.please_select_both_loc), Toast.LENGTH_SHORT).show();
+                }
             } else {
                 binding.tvDropOff.setText(add);
                 dropOffLatLng = new LatLng(lat,lon);
@@ -720,6 +739,36 @@ public class TaxiHomeActivity extends AppCompatActivity
             sharedPref.setDevLocation(AppConstant.Devlon,String.valueOf(currentLocation.getLongitude()));
 
         }
+
+//        else if(requestCode == AUTOCOMPLETE_REQUEST_CODE_DIALOG_PICK) {
+//            if (resultCode == RESULT_OK) {
+//                Place place = Autocomplete.getPlaceFromIntent(data);
+//                pickUpLatLng = place.getLatLng();
+//                try {
+//                    String addresses = ProjectUtil.getCompleteAddressString(mContext,place.getLatLng().latitude, place.getLatLng().longitude);
+//                    binding.tvPickUp.setText(addresses);
+//                } catch (Exception e) {}
+//                if(pickUpLatLng != null && dropOffLatLng != null){
+//                    drawRoute(pickUpLatLng,dropOffLatLng);
+//                } else {
+//                    // Toast.makeText(mContext, getString(R.string.please_select_both_loc), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        } else if(requestCode == AUTOCOMPLETE_REQUEST_CODE_DIALOG_DROP) {
+//            if (resultCode == RESULT_OK) {
+//                Place place = Autocomplete.getPlaceFromIntent(data);
+//                dropOffLatLng = place.getLatLng();
+//                try {
+//                    String addresses = ProjectUtil.getCompleteAddressString(mContext,place.getLatLng().latitude, place.getLatLng().longitude);
+//                    binding.tvDropOff.setText(addresses);
+//                } catch (Exception e) {}
+//                if(pickUpLatLng != null && dropOffLatLng != null){
+//                    drawRoute(pickUpLatLng,dropOffLatLng);
+//                } else {
+//                    Toast.makeText(mContext, getString(R.string.please_select_both_loc), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
 
     }
 

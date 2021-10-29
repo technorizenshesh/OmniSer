@@ -291,7 +291,8 @@ public interface Api {
                                  @Query("res_id") String res_id,
                                  @Query("price") String price,
                                  @Query("type") String type,
-                                 @Query("toping_id") String toping_id);
+                                 @Query("toping_id") String toping_id,
+                                 @Query("option_id") String option_id);
 
     @POST("get_cart")
     Call<ResponseBody> getCartItemsApi(@Query("user_id") String user_id,

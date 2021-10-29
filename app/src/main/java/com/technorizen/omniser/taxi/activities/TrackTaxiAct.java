@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
+
 import android.Manifest;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -23,6 +24,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -49,11 +51,14 @@ import com.technorizen.omniser.utils.AppConstant;
 import com.technorizen.omniser.utils.DrawPollyLine;
 import com.technorizen.omniser.utils.ProjectUtil;
 import com.technorizen.omniser.utils.SharedPref;
+
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -76,15 +81,14 @@ public class TrackTaxiAct extends AppCompatActivity
     ModelLogin modelLogin;
     GoogleMap map;
     Timer timer = new Timer();
-    String driverStatus = "",driverId=null,driverName="",driverImage=""
-            ,driverMobile=null,driverLat,driverLon;
+    String driverStatus = "", driverId = null, driverName = "", driverImage = "", driverMobile = null, driverLat = "", driverLon = "";
     private PolylineOptions lineOptions;
     private AlertDialog.Builder builder1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_track_taxi);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_track_taxi);
         sharedPref = SharedPref.getInstance(mContext);
         modelLogin = sharedPref.getUserDetails(AppConstant.USER_DETAILS);
 
@@ -101,14 +105,14 @@ public class TrackTaxiAct extends AppCompatActivity
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
-        public void onReceive(Context context,Intent intent) {
-            if(intent.getStringExtra("object") != null) {
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getStringExtra("object") != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(intent.getStringExtra("object"));
                     binding.ivCancel.setVisibility(View.GONE);
-                    if(String.valueOf(jsonObject.get("status")).equals("Cancel_by_driver")) {
+                    if (String.valueOf(jsonObject.get("status")).equals("Cancel_by_driver")) {
                         finish();
-                        startActivity(new Intent(mContext,TaxiHomeActivity.class));
+                        startActivity(new Intent(mContext, TaxiHomeActivity.class));
                     } else {
                         DriverArriveDialog(String.valueOf(jsonObject.get("status")));
                     }
@@ -130,7 +134,7 @@ public class TrackTaxiAct extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(broadcastReceiver,new IntentFilter("Job_Status_Action"));
+        registerReceiver(broadcastReceiver, new IntentFilter("Job_Status_Action"));
     }
 
     @Override
@@ -152,13 +156,13 @@ public class TrackTaxiAct extends AppCompatActivity
 
         TextView tvTitle = dialog.findViewById(R.id.tvTitle);
 
-        if(status.equals("Arrived")) {
+        if (status.equals("Arrived")) {
             tvTitle.setText(getString(R.string.driver_arrived));
             binding.titler.setText("Driver Arrived");
-        } else if(status.equals("Start")) {
+        } else if (status.equals("Start")) {
             binding.titler.setText("Trip Start");
             tvTitle.setText(getString(R.string.your_trip_has_begin));
-        } else if(status.equals("Finish")) {
+        } else if (status.equals("Finish")) {
             binding.titler.setText("Trip Finish");
             tvTitle.setText(getString(R.string.your_trip_is_finished));
         }
@@ -166,9 +170,9 @@ public class TrackTaxiAct extends AppCompatActivity
         TextView btnOk = dialog.findViewById(R.id.btnOk);
 
         btnOk.setOnClickListener(v -> {
-            if(status.equals("Finish")) {
+            if (status.equals("Finish")) {
                 finish();
-                startActivity(new Intent(mContext,MyBookingActivity.class));
+                startActivity(new Intent(mContext, MyBookingActivity.class));
             }
             dialog.dismiss();
         });
@@ -184,11 +188,11 @@ public class TrackTaxiAct extends AppCompatActivity
         });
 
         binding.ivChat.setOnClickListener(v -> {
-            startActivity(new Intent(mContext,TaxiChatingActivity.class)
-                    .putExtra("sender_id",modelLogin.getResult().getId())
-                    .putExtra("receiver_id",driverId)
-                    .putExtra("name",driverName)
-                    .putExtra("request_id",request_id)
+            startActivity(new Intent(mContext, TaxiChatingActivity.class)
+                    .putExtra("sender_id", modelLogin.getResult().getId())
+                    .putExtra("receiver_id", driverId)
+                    .putExtra("name", driverName)
+                    .putExtra("request_id", request_id)
             );
         });
 
@@ -204,14 +208,14 @@ public class TrackTaxiAct extends AppCompatActivity
                 .getString(R.string.are_your_sure_you_want_to_cancel_the_trip));
         builder1.setCancelable(false);
 
-        builder1.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+        builder1.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
                 cancelByUserApi();
             }
         });
 
-        builder1.setNegativeButton("No",new DialogInterface.OnClickListener() {
+        builder1.setNegativeButton("No", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
             }
@@ -223,10 +227,10 @@ public class TrackTaxiAct extends AppCompatActivity
     }
 
     private void cancelByUserApi() {
-        ProjectUtil.showProgressDialog(mContext,false,getString(R.string.please_wait));
+        ProjectUtil.showProgressDialog(mContext, false, getString(R.string.please_wait));
         Api api = ApiFactory.loadInterface();
 
-        HashMap<String,String> param = new HashMap<>();
+        HashMap<String, String> param = new HashMap<>();
         param.put("request_id", request_id);
 
         Call<ResponseBody> call = api.cancelTripByUser(param);
@@ -237,14 +241,14 @@ public class TrackTaxiAct extends AppCompatActivity
 
                 ProjectUtil.pauseProgressDialog();
 
-                Log.e("kghkljsdhkljf","response = " + response);
+                Log.e("kghkljsdhkljf", "response = " + response);
 
                 try {
                     String stringResponse = response.body().string();
                     JSONObject jsonObject = new JSONObject(stringResponse);
 
-                    Log.e("kjagsdkjgaskjd","stringResponse = " + response);
-                    Log.e("kjagsdkjgaskjd","stringResponse = " + stringResponse);
+                    Log.e("kjagsdkjgaskjd", "stringResponse = " + response);
+                    Log.e("kjagsdkjgaskjd", "stringResponse = " + stringResponse);
 
                     if (jsonObject.getString("status").equals("1")) {
                         finishAffinity();
@@ -272,9 +276,9 @@ public class TrackTaxiAct extends AppCompatActivity
     }
 
     private void getBookingDetail(String request_id) {
-        ProjectUtil.showProgressDialog(mContext,false,getString(R.string.please_wait));
-        HashMap<String,String> param = new HashMap<>();
-        param.put("request_id",request_id);
+        ProjectUtil.showProgressDialog(mContext, false, getString(R.string.please_wait));
+        HashMap<String, String> param = new HashMap<>();
+        param.put("request_id", request_id);
 
         Call<ResponseBody> call = ApiFactory.loadInterface().bookingDetails(param);
 
@@ -284,18 +288,18 @@ public class TrackTaxiAct extends AppCompatActivity
 
                 ProjectUtil.pauseProgressDialog();
 
-                Log.e("kghkljsdhkljf","request_id = " + request_id);
+                Log.e("kghkljsdhkljf", "request_id = " + request_id);
 
                 try {
                     String stringResponse = response.body().string();
                     JSONObject jsonObject = new JSONObject(stringResponse);
 
-                    Log.e("kjagsdkjgaskjd","stringResponse = " + response);
-                    Log.e("kjagsdkjgaskjd","stringResponse = " + stringResponse);
+                    Log.e("kjagsdkjgaskjd", "stringResponse = " + response);
+                    Log.e("kjagsdkjgaskjd", "stringResponse = " + stringResponse);
 
                     if (jsonObject.getString("status").equals("1")) {
 
-                        ModelTaxiBookingDetail data = new Gson().fromJson(stringResponse,ModelTaxiBookingDetail.class);
+                        ModelTaxiBookingDetail data = new Gson().fromJson(stringResponse, ModelTaxiBookingDetail.class);
 
                         driverId = data.getResult().getDriverDetails().getId();
                         driverName = data.getResult().getDriverDetails().getName();
@@ -305,23 +309,23 @@ public class TrackTaxiAct extends AppCompatActivity
                         driverLon = data.getResult().getDriverDetails().getLon();
                         binding.tvName.setText(driverName);
 
-                        if("Arrived".equals(data.getResult().getStatus())) {
+                        if ("Arrived".equals(data.getResult().getStatus())) {
                             binding.titler.setText(getString(R.string.driver_arrived));
                             binding.ivCancel.setVisibility(View.GONE);
-                        } else if("Start".equals(data.getResult().getStatus())) {
+                        } else if ("Start".equals(data.getResult().getStatus())) {
                             binding.titler.setText(getString(R.string.your_trip_has_begin));
                             binding.ivCancel.setVisibility(View.GONE);
-                        } else if("Finish".equals(data.getResult().getStatus())) {
+                        } else if ("Finish".equals(data.getResult().getStatus())) {
                             binding.titler.setText(getString(R.string.your_trip_is_finished));
                             binding.ivCancel.setVisibility(View.GONE);
                             // openPaymentSummaryDialog(data);
-                        } else if("Cancel_by_user".equals(data.getResult().getStatus())){
+                        } else if ("Cancel_by_user".equals(data.getResult().getStatus())) {
                             binding.ivCancel.setVisibility(View.GONE);
                             binding.titler.setText(getString(R.string.your_trip_is_cancelled));
-                        } else if("Cancel_by_driver".equals(data.getResult().getStatus())) {
+                        } else if ("Cancel_by_driver".equals(data.getResult().getStatus())) {
                             binding.ivCancel.setVisibility(View.GONE);
                             binding.titler.setText(getString(R.string.your_trip_is_cancelled));
-                        } else if("Paid".equals(data.getResult().getStatus())){
+                        } else if ("Paid".equals(data.getResult().getStatus())) {
                             binding.ivCancel.setVisibility(View.GONE);
                             binding.titler.setText(getString(R.string.paid));
                         } else {
@@ -338,18 +342,19 @@ public class TrackTaxiAct extends AppCompatActivity
                             Picasso.get().load(driverImage)
                                     .placeholder(R.drawable.default_profile_icon)
                                     .error(R.drawable.default_profile_icon).into(binding.ivDriverPropic);
-                        } catch (Exception e) {}
+                        } catch (Exception e) {
+                        }
 
                         pickUpLatLng = new LatLng(Double.parseDouble(data.getResult().getPicuplat()), Double.parseDouble(data.getResult().getPickuplon()));
                         dropOffLatLng = new LatLng(Double.parseDouble(data.getResult().getDroplat()), Double.parseDouble(data.getResult().getDroplon()));
 
-                        Log.e("fgdfgdfgdfg","pickUpLatLng = " + pickUpLatLng);
-                        Log.e("fgdfgdfgdfg","dropOffLatLng = " + dropOffLatLng);
+                        Log.e("fgdfgdfgdfg", "pickUpLatLng = " + pickUpLatLng);
+                        Log.e("fgdfgdfgdfg", "dropOffLatLng = " + dropOffLatLng);
 
                         if (checkPermissions()) {
                             if (isLocationEnabled()) {
-                                Log.e("dropOffLatLng","pickUpLatLng inside = " + pickUpLatLng);
-                                Log.e("dropOffLatLng","dropOffLatLng inside = " + dropOffLatLng);
+                                Log.e("dropOffLatLng", "pickUpLatLng inside = " + pickUpLatLng);
+                                Log.e("dropOffLatLng", "dropOffLatLng inside = " + dropOffLatLng);
                                 setPickUpDropOffRoute();
                             } else {
                                 Toast.makeText(TrackTaxiAct.this, "Turn on location", Toast.LENGTH_LONG).show();
@@ -374,6 +379,7 @@ public class TrackTaxiAct extends AppCompatActivity
             }
 
         });
+
     }
 
     private void setPickUpDropOffRoute() {
@@ -394,17 +400,26 @@ public class TrackTaxiAct extends AppCompatActivity
                         ArrayList<LatLng> latlonList = new ArrayList<>();
                         latlonList.add(pickUpLatLng);
                         latlonList.add(dropOffLatLng);
-                        if(driverCarMarker == null) {
-                            double lat = Double.parseDouble(driverLat);
-                            double lon = Double.parseDouble(driverLon);
+                        if (driverCarMarker == null) {
+
+                            double lat, lon;
+
+                            try {
+                                lat = Double.parseDouble(driverLat);
+                                lon = Double.parseDouble(driverLon);
+                            } catch (Exception e) {
+                                lat = 0.0;
+                                lon = 0.0;
+                            }
+
                             String driverAddress = ProjectUtil.getCompleteAddressString(mContext, lat, lon);
                             MarkerOptions pickMarker = new MarkerOptions().title("Driver Location")
                                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.car_top))
-                                    .position(new LatLng(lat,lon));
+                                    .position(new LatLng(lat, lon));
                             driverCarMarker = map.addMarker(pickMarker);
                         }
                         // latlonList.add(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()));
-                        zoomRoute(map,latlonList);
+                        zoomRoute(map, latlonList);
                         setPickDropMarker();
                     }
                 });
@@ -429,7 +444,7 @@ public class TrackTaxiAct extends AppCompatActivity
             if (lineOptions != null)
                 map.addPolyline(lineOptions);
             if (pickUpLatLng != null) {
-                String pickAdd = ProjectUtil.getCompleteAddressString(mContext,pickUpLatLng.latitude,pickUpLatLng.longitude);
+                String pickAdd = ProjectUtil.getCompleteAddressString(mContext, pickUpLatLng.latitude, pickUpLatLng.longitude);
                 MarkerOptions pickMarker = new MarkerOptions().title("PickUp Address : " + pickAdd)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.blue_marker))
                         .position(pickUpLatLng);
@@ -437,7 +452,7 @@ public class TrackTaxiAct extends AppCompatActivity
                 // mMap.animateCamera(CameraUpdateFactory.newCameraPosition(getCameraPositionWithBearing(PickUpLatLng)));
             }
             if (dropOffLatLng != null) {
-                String dropAdd = ProjectUtil.getCompleteAddressString(mContext,dropOffLatLng.latitude,dropOffLatLng.longitude);
+                String dropAdd = ProjectUtil.getCompleteAddressString(mContext, dropOffLatLng.latitude, dropOffLatLng.longitude);
                 MarkerOptions dropMarker = new MarkerOptions().title("Drop Address : " + dropAdd)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.red_marker))
                         .position(dropOffLatLng);
@@ -468,7 +483,6 @@ public class TrackTaxiAct extends AppCompatActivity
                 LocationManager.NETWORK_PROVIDER
         );
     }
-
 
 
 }

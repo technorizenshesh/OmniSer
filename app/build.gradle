@@ -4,6 +4,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
+    ndkVersion "23.0.7599858"
 
     defaultConfig {
         applicationId "com.technorizen.omniser"

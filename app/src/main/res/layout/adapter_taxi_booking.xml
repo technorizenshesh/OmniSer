@@ -49,7 +49,8 @@
                     android:layout_height="wrap_content"
                     android:text="CANCELLED"
                     android:textAllCaps="true"
-                    android:textColor="@color/red"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_12sdp"
                     android:layout_alignParentRight="true" />
 

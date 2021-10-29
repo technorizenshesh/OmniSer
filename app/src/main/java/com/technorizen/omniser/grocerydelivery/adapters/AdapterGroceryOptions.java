@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import com.technorizen.omniser.R;
 import com.technorizen.omniser.fooddelivery.adapters.AdapterResItems;
+import com.technorizen.omniser.fooddelivery.adapters.AdapterResItemsSearch;
 import com.technorizen.omniser.fooddelivery.models.ModelResTypeItems;
 import com.technorizen.omniser.utils.AppConstant;
 
@@ -20,11 +21,13 @@ import java.util.ArrayList;
 public class AdapterGroceryOptions extends BaseAdapter {
 
     Context mContext;
+    boolean isSearch = false;
     ArrayList<ModelResTypeItems.Result.Item_data.Topping> toppingList;
 
-    public AdapterGroceryOptions(Context mContext, ArrayList<ModelResTypeItems.Result.Item_data.Topping> toppingList) {
+    public AdapterGroceryOptions(Context mContext, ArrayList<ModelResTypeItems.Result.Item_data.Topping> toppingList,boolean isSearch) {
         this.mContext = mContext;
         this.toppingList = toppingList;
+        this.isSearch = isSearch;
     }
 
     @Override
@@ -79,7 +82,9 @@ public class AdapterGroceryOptions extends BaseAdapter {
             notifyDataSetChanged();
 
             Log.e("toppingListtoppingList","toppingList.get(position).getPrice() = " + toppingList.get(position).getPrice());
-            AdapterGroceryItems.updatePrice(toppingList.get(position).getPrice());
+
+            if(isSearch) AdapterResItemsSearch.updatePriceGrocery(toppingList.get(position).getPrice());
+            else AdapterGroceryItems.updatePrice(toppingList.get(position).getPrice());
 
         });
 

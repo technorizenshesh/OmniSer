@@ -73,7 +73,7 @@ public class SplashActivity extends AppCompatActivity implements
 
         // Log.e("dsfsdfs","dsasfds = " + new Gson().toJson(hashMap1));
 
-        if(sharedPref.getCartHash(AppConstant.CARTHASH) != null) {
+        if (sharedPref.getCartHash(AppConstant.CARTHASH) != null) {
             try {
             } catch (Exception e) {
                 e.printStackTrace();
@@ -96,7 +96,7 @@ public class SplashActivity extends AppCompatActivity implements
 
     private boolean checkPermissions() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED  &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -113,7 +113,7 @@ public class SplashActivity extends AppCompatActivity implements
     }
 
     private void requestPermissions() {
-        ActivityCompat.requestPermissions (
+        ActivityCompat.requestPermissions(
                 this,
                 new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.ACCESS_FINE_LOCATION,
@@ -136,25 +136,25 @@ public class SplashActivity extends AppCompatActivity implements
 
     private void processNextActivity() {
 
-        if(sharedPref.getBooleanValue(AppConstant.IS_REGISTER)) {
+        if (sharedPref.getBooleanValue(AppConstant.IS_REGISTER)) {
             modelLogin = sharedPref.getUserDetails(AppConstant.USER_DETAILS);
-            if("en".equals(sharedPref.getLanguage("lan"))) {
-                ProjectUtil.updateResources(mContext,"en");
-            } else if("es".equals(sharedPref.getLanguage("lan"))) {
-                ProjectUtil.updateResources(mContext,"es");
+            if ("en".equals(sharedPref.getLanguage("lan"))) {
+                ProjectUtil.updateResources(mContext, "en");
+            } else if ("es".equals(sharedPref.getLanguage("lan"))) {
+                ProjectUtil.updateResources(mContext, "es");
             } else {
-                ProjectUtil.updateResources(mContext,"en");
+                ProjectUtil.updateResources(mContext, "en");
             }
             getRecentLocation();
         } else {
-            if("en".equals(sharedPref.getLanguage("lan"))){
-                ProjectUtil.updateResources(mContext,"en");
-            } else if("es".equals(sharedPref.getLanguage("lan"))) {
-                ProjectUtil.updateResources(mContext,"es");
+            if ("en".equals(sharedPref.getLanguage("lan"))) {
+                ProjectUtil.updateResources(mContext, "en");
+            } else if ("es".equals(sharedPref.getLanguage("lan"))) {
+                ProjectUtil.updateResources(mContext, "es");
             } else {
-                ProjectUtil.updateResources(mContext,"en");
+                ProjectUtil.updateResources(mContext, "en");
             }
-            startActivity(new Intent(mContext,WelcomeActivity.class));
+            startActivity(new Intent(mContext, WelcomeActivity.class));
             finish();
         }
 
@@ -172,21 +172,21 @@ public class SplashActivity extends AppCompatActivity implements
                     String responseString = response.body().string();
                     JSONObject jsonObject = new JSONObject(responseString);
 
-                    if(jsonObject.getString("status").equals("1")) {
+                    if (jsonObject.getString("status").equals("1")) {
                         ModelLocations recentLocation = new Gson().fromJson(responseString, ModelLocations.class);
-                        sharedPref.setLocationModel(AppConstant.LOCATION_DETAILS,recentLocation);
-                        startActivity(new Intent(mContext,DashboardActivity.class));
+                        sharedPref.setLocationModel(AppConstant.LOCATION_DETAILS, recentLocation);
+                        startActivity(new Intent(mContext, DashboardActivity.class));
                         finish();
                     } else {
-                        startActivity(new Intent(mContext,DashboardActivity.class));
+                        startActivity(new Intent(mContext, DashboardActivity.class));
                         finish();
                     }
 
                 } catch (Exception e) {
-                    startActivity(new Intent(mContext,DashboardActivity.class));
+                    startActivity(new Intent(mContext, DashboardActivity.class));
                     finish();
                     //Toast.makeText(mContext, "Exception = " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("Exception","Exception = " + e.getMessage());
+                    Log.e("Exception", "Exception = " + e.getMessage());
                 }
 
             }
@@ -194,10 +194,10 @@ public class SplashActivity extends AppCompatActivity implements
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 ProjectUtil.pauseProgressDialog();
-                startActivity(new Intent(mContext,DashboardActivity.class));
+                startActivity(new Intent(mContext, DashboardActivity.class));
                 finish();
                 Toast.makeText(mContext, t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("onFailure","onFailure = " + t.getMessage());
+                Log.e("onFailure", "onFailure = " + t.getMessage());
             }
         });
 
@@ -232,7 +232,7 @@ public class SplashActivity extends AppCompatActivity implements
                     switch (status.getStatusCode()) {
                         case LocationSettingsStatusCodes.SUCCESS:
                             // toast("Success");
-                            Log.e("dskgfhsdfsdf","Success");
+                            Log.e("dskgfhsdfsdf", "Success");
                             Toast.makeText(SplashActivity.this, "Success", Toast.LENGTH_SHORT).show();
                             // All location settings are satisfied. The client can
                             // initialize location
@@ -240,7 +240,7 @@ public class SplashActivity extends AppCompatActivity implements
                             break;
                         case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                             //toast("GPS is not on");
-                            Log.e("dskgfhsdfsdf","No GPS");
+                            Log.e("dskgfhsdfsdf", "No GPS");
                             Toast.makeText(SplashActivity.this, "GPS is not on", Toast.LENGTH_SHORT).show();
                             // Location settings are not satisfied. But could be
                             // fixed by showing the user
@@ -272,12 +272,15 @@ public class SplashActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {}
+    public void onConnected(@Nullable Bundle bundle) {
+    }
 
     @Override
-    public void onConnectionSuspended(int i) {}
+    public void onConnectionSuspended(int i) {
+    }
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    }
 
 }

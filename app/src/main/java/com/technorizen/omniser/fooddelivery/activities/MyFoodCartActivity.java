@@ -52,9 +52,7 @@ public class MyFoodCartActivity extends AppCompatActivity implements UpdateTotal
         sharedPref = SharedPref.getInstance(mContext);
         modelLogin = sharedPref.getUserDetails(AppConstant.USER_DETAILS);
         ProjectUtil.changeStatusBarColor(MyFoodCartActivity.this);
-
         init();
-
     }
 
     @Override
@@ -85,6 +83,7 @@ public class MyFoodCartActivity extends AppCompatActivity implements UpdateTotal
                );
             }
         });
+
     }
 
     private void openApplyCouponDialog() {
@@ -109,10 +108,10 @@ public class MyFoodCartActivity extends AppCompatActivity implements UpdateTotal
 
     @Override
     public void updateCartData(String itemTotal,String devCharge,String totalPlusDev) {
-          getCartDetailsApi();
-//        binding.itemsTotal.setText(AppConstant.DOLLER_SIGN + itemTotal);
-//        binding.deliveryfee.setText(AppConstant.DOLLER_SIGN + devCharge);
-//        binding.itemPlusDevCharges.setText(AppConstant.DOLLER_SIGN + totalPlusDev);
+        getCartDetailsApi();
+//      binding.itemsTotal.setText(AppConstant.DOLLER_SIGN + itemTotal);
+//      binding.deliveryfee.setText(AppConstant.DOLLER_SIGN + devCharge);
+//      binding.itemPlusDevCharges.setText(AppConstant.DOLLER_SIGN + totalPlusDev);
     }
 
     @Override

@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.technorizen.omniser.R;
+import com.technorizen.omniser.activities.SearchItemsAct;
 import com.technorizen.omniser.databinding.ActivityGraceryShopDetailBinding;
 import com.technorizen.omniser.fooddelivery.activities.FoodItemDetailsActivity;
 import com.technorizen.omniser.fooddelivery.activities.MyFoodCartActivity;
@@ -90,16 +91,20 @@ public class GraceryShopDetailActivity extends AppCompatActivity {
         });
 
         binding.ivSearch.setOnClickListener(v -> {
-            binding.etSearch.setText("");
-            if(isSearchVisible) {
-                isSearchVisible = false;
-                binding.cvSearchView.setVisibility(View.GONE);
-                binding.rvResCategory.setVisibility(View.VISIBLE);
-            } else {
-                isSearchVisible = true;
-                binding.cvSearchView.setVisibility(View.VISIBLE);
-                binding.rvResCategory.setVisibility(View.GONE);
-            }
+            startActivity(new Intent(mContext, SearchItemsAct.class)
+                    .putExtra("resid", grosId)
+                    .putExtra("type", AppConstant.GROCERY)
+            );
+//            binding.etSearch.setText("");
+//            if(isSearchVisible) {
+//                isSearchVisible = false;
+//                binding.cvSearchView.setVisibility(View.GONE);
+//                binding.rvResCategory.setVisibility(View.VISIBLE);
+//            } else {
+//                isSearchVisible = true;
+//                binding.cvSearchView.setVisibility(View.VISIBLE);
+//                binding.rvResCategory.setVisibility(View.GONE);
+//            }
         });
 
         binding.etSearch.addTextChangedListener(new TextWatcher() {
@@ -323,8 +328,7 @@ public class GraceryShopDetailActivity extends AppCompatActivity {
                                 .load(modelResDetails.getResult().getImage())
                                 .placeholder(R.drawable.loading)
                                 .error(R.drawable.loading)
-                                .apply(new RequestOptions()
-                                        .override(500,500))
+                                .apply(new RequestOptions().override(500,500))
                                 .into(binding.ivResImage);
 
                         binding.tvResName.setText(modelResDetails.getResult().getName());

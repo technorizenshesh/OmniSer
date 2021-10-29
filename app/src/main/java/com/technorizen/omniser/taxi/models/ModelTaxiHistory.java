@@ -64,6 +64,8 @@ public class ModelTaxiHistory implements Serializable {
 
         private String status;
 
+        private String spanish_status;
+
         private String req_datetime;
 
         private String estimate_charge_amount;
@@ -107,6 +109,14 @@ public class ModelTaxiHistory implements Serializable {
         private String booking_status;
 
         private String driver_ids;
+
+        public String getSpanish_status() {
+            return spanish_status;
+        }
+
+        public void setSpanish_status(String spanish_status) {
+            this.spanish_status = spanish_status;
+        }
 
         public String getDriver_name() {
             return driver_name;

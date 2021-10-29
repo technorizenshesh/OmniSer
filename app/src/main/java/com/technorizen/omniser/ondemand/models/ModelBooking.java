@@ -54,9 +54,19 @@ public class ModelBooking implements Serializable {
 
         private String status;
 
+        private String spanish_status;
+
         private String date_time;
 
         private Service_details service_details;
+
+        public String getSpanish_status() {
+            return spanish_status;
+        }
+
+        public void setSpanish_status(String spanish_status) {
+            this.spanish_status = spanish_status;
+        }
 
         public void setId(String id){
             this.id = id;
